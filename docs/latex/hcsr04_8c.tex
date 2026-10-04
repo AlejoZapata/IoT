@@ -1,0 +1,56 @@
+\doxysection{src/\+hcsr04.c File Reference}
+\hypertarget{hcsr04_8c}{}\label{hcsr04_8c}\index{src/hcsr04.c@{src/hcsr04.c}}
+{\ttfamily \+\#include "{}hcsr04.\+h"{}}\newline
+{\ttfamily \+\#include "{}driver/\+gpio.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+timer.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+task.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+log.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{hcsr04_8c_afc3d101f633a076cc1ca84b85b6224b2}{TAG}}~"{}HCSR04"{}
+\item 
+\+\#define \doxymbox{\hyperlink{hcsr04_8c_a9ee0c6cb22ce4ffbbc448115500c6edc}{TIMEOUT\+\_\+\+US}}~25000
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{hcsr04_8c_a4a47b9d438bfb74912ad56d2cc9d7c13}{hcsr04\+\_\+init}} (const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}cfg)
+\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{hcsr04_8c_a23e12e43f6709c9d1a064d80e5005640}{hcsr04\+\_\+measure\+\_\+cm}} (const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}cfg, float \texorpdfstring{$\ast$}{*}out\+\_\+cm)
+\end{DoxyCompactItemize}
+
+
+\label{hcsr04_8c_doc-define-members}
+\Hypertarget{hcsr04_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{hcsr04_8c_afc3d101f633a076cc1ca84b85b6224b2}\index{hcsr04.c@{hcsr04.c}!TAG@{TAG}}
+\index{TAG@{TAG}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{TAG}{TAG}}
+{\footnotesize\ttfamily \label{hcsr04_8c_afc3d101f633a076cc1ca84b85b6224b2} 
+\+\#define TAG~"{}HCSR04"{}}
+
+\Hypertarget{hcsr04_8c_a9ee0c6cb22ce4ffbbc448115500c6edc}\index{hcsr04.c@{hcsr04.c}!TIMEOUT\_US@{TIMEOUT\_US}}
+\index{TIMEOUT\_US@{TIMEOUT\_US}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{TIMEOUT\_US}{TIMEOUT\_US}}
+{\footnotesize\ttfamily \label{hcsr04_8c_a9ee0c6cb22ce4ffbbc448115500c6edc} 
+\+\#define TIMEOUT\+\_\+\+US~25000}
+
+
+
+\label{hcsr04_8c_doc-func-members}
+\Hypertarget{hcsr04_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{hcsr04_8c_a4a47b9d438bfb74912ad56d2cc9d7c13}\index{hcsr04.c@{hcsr04.c}!hcsr04\_init@{hcsr04\_init}}
+\index{hcsr04\_init@{hcsr04\_init}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{hcsr04\_init()}{hcsr04\_init()}}
+{\footnotesize\ttfamily \label{hcsr04_8c_a4a47b9d438bfb74912ad56d2cc9d7c13} 
+esp\+\_\+err\+\_\+t hcsr04\+\_\+init (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cfg}{}\end{DoxyParamCaption})}
+
+\Hypertarget{hcsr04_8c_a23e12e43f6709c9d1a064d80e5005640}\index{hcsr04.c@{hcsr04.c}!hcsr04\_measure\_cm@{hcsr04\_measure\_cm}}
+\index{hcsr04\_measure\_cm@{hcsr04\_measure\_cm}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{hcsr04\_measure\_cm()}{hcsr04\_measure\_cm()}}
+{\footnotesize\ttfamily \label{hcsr04_8c_a23e12e43f6709c9d1a064d80e5005640} 
+esp\+\_\+err\+\_\+t hcsr04\+\_\+measure\+\_\+cm (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cfg}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{out\+\_\+cm}{}\end{DoxyParamCaption})}
+

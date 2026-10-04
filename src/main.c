@@ -5,7 +5,7 @@
  *          y el control de 5 relés por medio de comandos enviados por consola serial.
  * @author Alejandro zapata - Miguel alvarez - Thomas Ciro / Proyecto
  * @date 2026-10-04  
- * w
+ * 
  */
 
 #include <stdio.h>

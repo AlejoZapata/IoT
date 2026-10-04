@@ -1,0 +1,16 @@
+\doxysection{hcsr04.\+h}
+\hypertarget{hcsr04_8h_source}{}\label{hcsr04_8h_source}\index{src/hcsr04.h@{src/hcsr04.h}}
+\doxymbox{\hyperlink{hcsr04_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}esp\_err.h"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00005\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structhcsr04__config__t_a87da2104443449106fdc7c777f9762a0}{trig\_pin}};}
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structhcsr04__config__t_a7c39b93bf62e3d78efdbf256fef45d0d}{echo\_pin}};}
+\DoxyCodeLine{00007\ \}\ \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\_config\_t}};}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ esp\_err\_t\ \doxymbox{\hyperlink{hcsr04_8c_a4a47b9d438bfb74912ad56d2cc9d7c13}{hcsr04\_init}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\_config\_t}}\ *cfg);}
+\DoxyCodeLine{00010\ esp\_err\_t\ \doxymbox{\hyperlink{hcsr04_8c_a23e12e43f6709c9d1a064d80e5005640}{hcsr04\_measure\_cm}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\_config\_t}}\ *cfg,\ \textcolor{keywordtype}{float}\ *out\_cm);}
+
+\end{DoxyCode}
