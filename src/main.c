@@ -4,7 +4,7 @@
  * @details Este archivo gestiona la lectura de múltiples sensores de temperatura (dos LM35 vía ADC y un DHT11)
  *          y el control de 5 relés por medio de comandos enviados por consola serial.
  * @author Alejandro zapata - Miguel alvarez - Thomas Ciro / Proyecto
- * @date 2026-10-04
+ * @date 2026-10-04 
  */
 
 #include <stdio.h>
