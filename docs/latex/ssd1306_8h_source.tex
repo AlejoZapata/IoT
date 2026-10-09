@@ -1,0 +1,62 @@
+\doxysection{ssd1306.\+h}
+\hypertarget{ssd1306_8h_source}{}\label{ssd1306_8h_source}\index{src/ssd1306.h@{src/ssd1306.h}}
+\doxymbox{\hyperlink{ssd1306_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ SSD1306\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ SSD1306\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}esp\_err.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}driver/i2c.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ SSD1306\_WIDTH\ \ \ \ \ \ \ 128}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ SSD1306\_HEIGHT\ \ \ \ \ \ 64}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ SSD1306\_BUFFER\_SIZE\ (SSD1306\_WIDTH\ *\ SSD1306\_HEIGHT\ /\ 8)}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ SSD1306\_DEFAULT\_ADDR\ 0x3C}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ SSD1306\_COLOR\_BLACK\ \ 0}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ SSD1306\_COLOR\_WHITE\ \ 1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ SSD1306\_COLOR\_INVERT\ 2}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00041\ esp\_err\_t\ \doxymbox{\hyperlink{ssd1306_8c_aa0e802c0a19bd2b5a4b43bb490227445}{ssd1306\_init}}(i2c\_port\_t\ port,\ uint8\_t\ addr);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a561cceb2a69fad0aa293bee40f056403}{ssd1306\_clear}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a010e75b735b8cfcbeeff87467558ea5c}{ssd1306\_fill}}(uint8\_t\ color);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00058\ esp\_err\_t\ \doxymbox{\hyperlink{ssd1306_8c_ae55a7077a830bfc6ec2eb2b0d479db0d}{ssd1306\_update}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00067\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_ac15478569af3e848c568620c1d6b6bd0}{ssd1306\_draw\_pixel}}(int16\_t\ x,\ int16\_t\ y,\ uint8\_t\ color);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_ae3892b609f837bb4a0cbef88faf4f8e4}{ssd1306\_draw\_line}}(int16\_t\ x0,\ int16\_t\ y0,\ int16\_t\ x1,\ int16\_t\ y1,\ uint8\_t\ color);}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00086\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a5c3f89100a0243669ce8a89919ea1d27}{ssd1306\_draw\_fast\_h\_line}}(int16\_t\ x,\ int16\_t\ y,\ int16\_t\ w,\ uint8\_t\ color);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00095\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a47510c9d51d05f48da581d6f22d8ff15}{ssd1306\_draw\_fast\_v\_line}}(int16\_t\ x,\ int16\_t\ y,\ int16\_t\ h,\ uint8\_t\ color);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00105\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a006e16bf50c91a921489c323f8c4ec38}{ssd1306\_draw\_rect}}(int16\_t\ x,\ int16\_t\ y,\ int16\_t\ w,\ int16\_t\ h,\ uint8\_t\ color);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00115\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_ad22ecd18c86a49f16e0e9675d1a4c18c}{ssd1306\_fill\_rect}}(int16\_t\ x,\ int16\_t\ y,\ int16\_t\ w,\ int16\_t\ h,\ uint8\_t\ color);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00124\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_acdf5013252ceb058b96a6915475f8d7d}{ssd1306\_draw\_circle}}(int16\_t\ x0,\ int16\_t\ y0,\ int16\_t\ r,\ uint8\_t\ color);}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00133\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a4d2214dc93b0c6e0d9b301b60ba396d4}{ssd1306\_fill\_circle}}(int16\_t\ x0,\ int16\_t\ y0,\ int16\_t\ r,\ uint8\_t\ color);}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00143\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a03172a6f3269bb5c337c6f5b580bb3e6}{ssd1306\_draw\_char}}(int16\_t\ x,\ int16\_t\ y,\ \textcolor{keywordtype}{char}\ c,\ uint8\_t\ color,\ uint8\_t\ bg\_color);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00154\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_a5c1cab0c2b126ba47c56afaf6bcd2501}{ssd1306\_draw\_string}}(int16\_t\ x,\ int16\_t\ y,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *str,\ uint8\_t\ color,\ uint8\_t\ bg\_color);}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00165\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ssd1306_8c_ac84bd05558fed94970d55db31e5bcaef}{ssd1306\_draw\_bitmap}}(int16\_t\ x,\ int16\_t\ y,\ \textcolor{keyword}{const}\ uint8\_t\ *bitmap,\ int16\_t\ w,\ int16\_t\ h,\ uint8\_t\ color);}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00172\ esp\_err\_t\ \doxymbox{\hyperlink{ssd1306_8c_afd07675d2374961787183e277cf6beb8}{ssd1306\_set\_contrast}}(uint8\_t\ contrast);}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00179\ esp\_err\_t\ \doxymbox{\hyperlink{ssd1306_8c_ac689c6dc5f86410336cb5356bc078627}{ssd1306\_invert\_display}}(\textcolor{keywordtype}{bool}\ invert);}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00186\ uint8\_t*\ \doxymbox{\hyperlink{ssd1306_8c_a2db9386c2858be0f23936e6ca71965b7}{ssd1306\_get\_buffer}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SSD1306\_H}}
+
+\end{DoxyCode}

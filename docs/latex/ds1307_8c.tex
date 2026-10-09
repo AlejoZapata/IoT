@@ -1,0 +1,144 @@
+\doxysection{src/\+ds1307.c File Reference}
+\hypertarget{ds1307_8c}{}\label{ds1307_8c}\index{src/ds1307.c@{src/ds1307.c}}
+
+
+Acceso al DS1307 mediante I2C y conversion entre decimal y BCD.  
+
+
+{\ttfamily \+\#include "{}ds1307.\+h"{}}\newline
+{\ttfamily \+\#include "{}driver/\+i2c.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+log.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{ds1307_8c_a033b5e8a30541fe4ff939a62fdb7a43d}{I2\+C\+\_\+\+MASTER\+\_\+\+SCL\+\_\+\+IO}}~9
+\item 
+\+\#define \doxymbox{\hyperlink{ds1307_8c_af47631d568bba17edf9d1ea042602bb6}{I2\+C\+\_\+\+MASTER\+\_\+\+SDA\+\_\+\+IO}}~8
+\item 
+\+\#define \doxymbox{\hyperlink{ds1307_8c_aab9e642b6200f95fcbd2ad7466aaa2d3}{I2\+C\+\_\+\+MASTER\+\_\+\+NUM}}~I2\+C\+\_\+\+NUM\+\_\+0
+\item 
+\+\#define \doxymbox{\hyperlink{ds1307_8c_a5c22ca4de37a83a59014e48b0a0b043d}{I2\+C\+\_\+\+MASTER\+\_\+\+FREQ\+\_\+\+HZ}}~100000
+\item 
+\+\#define \doxymbox{\hyperlink{ds1307_8c_a888d9352ff04c51673512d48f2e7210d}{DS1307\+\_\+\+ADDR}}~0x68
+\item 
+\+\#define \doxymbox{\hyperlink{ds1307_8c_afc3d101f633a076cc1ca84b85b6224b2}{TAG}}~"{}DS1307"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{ds1307_8c_a727dda1535d27c79c72e3336ece957fb}{ds1307\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Configura e instala el bus I2C usado por el DS1307. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ds1307_8c_ad98b9e88d41eaf2ffe162e9c84ee64fc}{ds1307\+\_\+set\+\_\+time}} (uint8\+\_\+t sec, uint8\+\_\+t min, uint8\+\_\+t hour, uint8\+\_\+t day, uint8\+\_\+t date, uint8\+\_\+t month, uint8\+\_\+t year)
+\begin{DoxyCompactList}\small\item\em Escribe la fecha y hora en el DS1307. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ds1307_8c_a0b904430b1cc2dc4f3aa3da52d8479ec}{ds1307\+\_\+get\+\_\+time}} (\doxymbox{\hyperlink{structds1307__time__t}{ds1307\+\_\+time\+\_\+t}} \texorpdfstring{$\ast$}{*}time)
+\begin{DoxyCompactList}\small\item\em Lee los registros de fecha y hora del DS1307. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Acceso al DS1307 mediante I2C y conversion entre decimal y BCD. 
+
+El modulo usa la direccion I2C 0x68 y configura el bus en GPIO 8 (SDA) y GPIO 9 (SCL), a 100 k\+Hz. 
+
+\label{ds1307_8c_doc-define-members}
+\Hypertarget{ds1307_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ds1307_8c_a888d9352ff04c51673512d48f2e7210d}\index{ds1307.c@{ds1307.c}!DS1307\_ADDR@{DS1307\_ADDR}}
+\index{DS1307\_ADDR@{DS1307\_ADDR}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{DS1307\_ADDR}{DS1307\_ADDR}}
+{\footnotesize\ttfamily \label{ds1307_8c_a888d9352ff04c51673512d48f2e7210d} 
+\+\#define DS1307\+\_\+\+ADDR~0x68}
+
+Direccion I2C de 7 bits del DS1307. \Hypertarget{ds1307_8c_a5c22ca4de37a83a59014e48b0a0b043d}\index{ds1307.c@{ds1307.c}!I2C\_MASTER\_FREQ\_HZ@{I2C\_MASTER\_FREQ\_HZ}}
+\index{I2C\_MASTER\_FREQ\_HZ@{I2C\_MASTER\_FREQ\_HZ}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{I2C\_MASTER\_FREQ\_HZ}{I2C\_MASTER\_FREQ\_HZ}}
+{\footnotesize\ttfamily \label{ds1307_8c_a5c22ca4de37a83a59014e48b0a0b043d} 
+\+\#define I2\+C\+\_\+\+MASTER\+\_\+\+FREQ\+\_\+\+HZ~100000}
+
+Frecuencia del bus I2C en hertz. \Hypertarget{ds1307_8c_aab9e642b6200f95fcbd2ad7466aaa2d3}\index{ds1307.c@{ds1307.c}!I2C\_MASTER\_NUM@{I2C\_MASTER\_NUM}}
+\index{I2C\_MASTER\_NUM@{I2C\_MASTER\_NUM}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{I2C\_MASTER\_NUM}{I2C\_MASTER\_NUM}}
+{\footnotesize\ttfamily \label{ds1307_8c_aab9e642b6200f95fcbd2ad7466aaa2d3} 
+\+\#define I2\+C\+\_\+\+MASTER\+\_\+\+NUM~I2\+C\+\_\+\+NUM\+\_\+0}
+
+Puerto I2C del DS1307. \Hypertarget{ds1307_8c_a033b5e8a30541fe4ff939a62fdb7a43d}\index{ds1307.c@{ds1307.c}!I2C\_MASTER\_SCL\_IO@{I2C\_MASTER\_SCL\_IO}}
+\index{I2C\_MASTER\_SCL\_IO@{I2C\_MASTER\_SCL\_IO}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{I2C\_MASTER\_SCL\_IO}{I2C\_MASTER\_SCL\_IO}}
+{\footnotesize\ttfamily \label{ds1307_8c_a033b5e8a30541fe4ff939a62fdb7a43d} 
+\+\#define I2\+C\+\_\+\+MASTER\+\_\+\+SCL\+\_\+\+IO~9}
+
+GPIO usado como reloj del bus I2C. \Hypertarget{ds1307_8c_af47631d568bba17edf9d1ea042602bb6}\index{ds1307.c@{ds1307.c}!I2C\_MASTER\_SDA\_IO@{I2C\_MASTER\_SDA\_IO}}
+\index{I2C\_MASTER\_SDA\_IO@{I2C\_MASTER\_SDA\_IO}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{I2C\_MASTER\_SDA\_IO}{I2C\_MASTER\_SDA\_IO}}
+{\footnotesize\ttfamily \label{ds1307_8c_af47631d568bba17edf9d1ea042602bb6} 
+\+\#define I2\+C\+\_\+\+MASTER\+\_\+\+SDA\+\_\+\+IO~8}
+
+GPIO usado como datos del bus I2C. \Hypertarget{ds1307_8c_afc3d101f633a076cc1ca84b85b6224b2}\index{ds1307.c@{ds1307.c}!TAG@{TAG}}
+\index{TAG@{TAG}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{TAG}{TAG}}
+{\footnotesize\ttfamily \label{ds1307_8c_afc3d101f633a076cc1ca84b85b6224b2} 
+\+\#define TAG~"{}DS1307"{}}
+
+Etiqueta usada en los mensajes de registro del modulo. 
+
+\label{ds1307_8c_doc-func-members}
+\Hypertarget{ds1307_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{ds1307_8c_a0b904430b1cc2dc4f3aa3da52d8479ec}\index{ds1307.c@{ds1307.c}!ds1307\_get\_time@{ds1307\_get\_time}}
+\index{ds1307\_get\_time@{ds1307\_get\_time}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{ds1307\_get\_time()}{ds1307\_get\_time()}}
+{\footnotesize\ttfamily \label{ds1307_8c_a0b904430b1cc2dc4f3aa3da52d8479ec} 
+void ds1307\+\_\+get\+\_\+time (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structds1307__time__t}{ds1307\+\_\+time\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{time}{}\end{DoxyParamCaption})}
+
+
+
+Lee los registros de fecha y hora del DS1307. 
+
+Decodifica los valores BCD y los guarda en {\ttfamily time}. La funcion presupone que la lectura I2C se completa correctamente y no informa errores de bus.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{out}}  & {\em time} & Estructura donde se guardaran los valores; no puede ser NULL. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ds1307_8c_a727dda1535d27c79c72e3336ece957fb}\index{ds1307.c@{ds1307.c}!ds1307\_init@{ds1307\_init}}
+\index{ds1307\_init@{ds1307\_init}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{ds1307\_init()}{ds1307\_init()}}
+{\footnotesize\ttfamily \label{ds1307_8c_a727dda1535d27c79c72e3336ece957fb} 
+void ds1307\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Configura e instala el bus I2C usado por el DS1307. 
+
+Usa I2\+C\+\_\+\+NUM\+\_\+0, SDA en GPIO 8, SCL en GPIO 9 y una frecuencia de 100 k\+Hz. Esta funcion no devuelve el estado de las operaciones I2C. \Hypertarget{ds1307_8c_ad98b9e88d41eaf2ffe162e9c84ee64fc}\index{ds1307.c@{ds1307.c}!ds1307\_set\_time@{ds1307\_set\_time}}
+\index{ds1307\_set\_time@{ds1307\_set\_time}!ds1307.c@{ds1307.c}}
+\doxysubsubsection{\texorpdfstring{ds1307\_set\_time()}{ds1307\_set\_time()}}
+{\footnotesize\ttfamily \label{ds1307_8c_ad98b9e88d41eaf2ffe162e9c84ee64fc} 
+void ds1307\+\_\+set\+\_\+time (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{sec}{, }\item[{uint8\+\_\+t}]{min}{, }\item[{uint8\+\_\+t}]{hour}{, }\item[{uint8\+\_\+t}]{day}{, }\item[{uint8\+\_\+t}]{date}{, }\item[{uint8\+\_\+t}]{month}{, }\item[{uint8\+\_\+t}]{year}{}\end{DoxyParamCaption})}
+
+
+
+Escribe la fecha y hora en el DS1307. 
+
+Los valores se convierten a BCD antes de escribirlos. El ano se almacena como dos digitos y el dia de la semana usa el valor especificado por el llamador.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sec} & Segundos (0-\/59). \\
+\hline
+{\em min} & Minutos (0-\/59). \\
+\hline
+{\em hour} & Hora en formato de 24 horas (0-\/23). \\
+\hline
+{\em day} & Dia de la semana segun la convencion de la aplicacion. \\
+\hline
+{\em date} & Dia del mes (1-\/31). \\
+\hline
+{\em month} & Mes (1-\/12). \\
+\hline
+{\em year} & Ano de dos digitos (0-\/99). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+La funcion no devuelve el estado de la escritura I2C. 
+\end{DoxyNote}

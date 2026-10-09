@@ -1,0 +1,30 @@
+\doxysection{ds1307.\+h}
+\hypertarget{ds1307_8h_source}{}\label{ds1307_8h_source}\index{src/ds1307.h@{src/ds1307.h}}
+\doxymbox{\hyperlink{ds1307_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DS1307\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DS1307\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00013\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structds1307__time__t_a7e748e1e8ffd4c750df92cdf4d69416c}{sec}};\ \ \ }
+\DoxyCodeLine{00014\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structds1307__time__t_a726ab0f0b625e1494bbc54486eb5dc27}{min}};\ \ \ }
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structds1307__time__t_a38b989d28c90596d723243c1069aed36}{hour}};\ \ }
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structds1307__time__t_a1d88ae2ad11fe1742dded8f3030ed8e1}{day}};\ \ \ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structds1307__time__t_a50e56eabefc6fc8ee3ddca48a434b0b2}{date}};\ \ }
+\DoxyCodeLine{00018\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structds1307__time__t_ab21ce3c503441a19a1516dff293c79ba}{month}};\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{structds1307__time__t_a1717d1cd2ef7c60c2bc5b57c65c01ef4}{year}};\ \ }
+\DoxyCodeLine{00020\ \}\ \doxymbox{\hyperlink{structds1307__time__t}{ds1307\_time\_t}};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00028\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ds1307_8c_a727dda1535d27c79c72e3336ece957fb}{ds1307\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ds1307_8c_ad98b9e88d41eaf2ffe162e9c84ee64fc}{ds1307\_set\_time}}(uint8\_t\ sec,\ uint8\_t\ min,\ uint8\_t\ hour,\ uint8\_t\ day,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ date,\ uint8\_t\ month,\ uint8\_t\ year);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00057\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{ds1307_8c_a0b904430b1cc2dc4f3aa3da52d8479ec}{ds1307\_get\_time}}(\doxymbox{\hyperlink{structds1307__time__t}{ds1307\_time\_t}}\ *time);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

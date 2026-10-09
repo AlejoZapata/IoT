@@ -1,0 +1,460 @@
+\doxysection{src/\+ssd1306.h File Reference}
+\hypertarget{ssd1306_8h}{}\label{ssd1306_8h}\index{src/ssd1306.h@{src/ssd1306.h}}
+
+
+API grafica para un display OLED SSD1306 de 128x64 conectado por I2C.  
+
+
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \+\#include "{}esp\+\_\+err.\+h"{}}\newline
+{\ttfamily \+\#include "{}driver/\+i2c.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{ssd1306_8h_ae5a2aa8865dd03537b97fd1c9037371b}{SSD1306\+\_\+\+WIDTH}}~128
+\item 
+\+\#define \doxymbox{\hyperlink{ssd1306_8h_a4e9409448a0df95c1686670e09b457b7}{SSD1306\+\_\+\+HEIGHT}}~64
+\item 
+\+\#define \doxymbox{\hyperlink{ssd1306_8h_a8fa5d8d60ba1f95d0bf58d83a39678b9}{SSD1306\+\_\+\+BUFFER\+\_\+\+SIZE}}~(\doxymbox{\hyperlink{ssd1306_8h_ae5a2aa8865dd03537b97fd1c9037371b}{SSD1306\+\_\+\+WIDTH}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{ssd1306_8h_a4e9409448a0df95c1686670e09b457b7}{SSD1306\+\_\+\+HEIGHT}} /\+ 8)
+\item 
+\+\#define \doxymbox{\hyperlink{ssd1306_8h_a7a62ccbbe58181b180b0273fa1bc4866}{SSD1306\+\_\+\+DEFAULT\+\_\+\+ADDR}}~0x3C
+\item 
+\+\#define \doxymbox{\hyperlink{ssd1306_8h_ac82a7514c5caa1e7df321d9c6153e56b}{SSD1306\+\_\+\+COLOR\+\_\+\+BLACK}}~0
+\item 
+\+\#define \doxymbox{\hyperlink{ssd1306_8h_ae6157b7de716b55b5c9665cbb0f50158}{SSD1306\+\_\+\+COLOR\+\_\+\+WHITE}}~1
+\item 
+\+\#define \doxymbox{\hyperlink{ssd1306_8h_a7acecbcb248033b242a01793c93150fc}{SSD1306\+\_\+\+COLOR\+\_\+\+INVERT}}~2
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{ssd1306_8h_aa0e802c0a19bd2b5a4b43bb490227445}{ssd1306\+\_\+init}} (i2c\+\_\+port\+\_\+t port, uint8\+\_\+t addr)
+\begin{DoxyCompactList}\small\item\em Inicializa el display OLED SSD1306 en el bus I2C especificado. \end{DoxyCompactList}\item 
+\Hypertarget{ssd1306_8h_a561cceb2a69fad0aa293bee40f056403}\label{ssd1306_8h_a561cceb2a69fad0aa293bee40f056403} 
+void {\bfseries ssd1306\+\_\+clear} (void)
+\begin{DoxyCompactList}\small\item\em Limpia el buffer interno (todo apagado). No actualiza la pantalla de inmediato. \end{DoxyCompactList}\item 
+\Hypertarget{ssd1306_8h_a010e75b735b8cfcbeeff87467558ea5c}\label{ssd1306_8h_a010e75b735b8cfcbeeff87467558ea5c} 
+void {\bfseries ssd1306\+\_\+fill} (uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Llena el buffer interno (todo encendido o todo apagado). \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{ssd1306_8h_ae55a7077a830bfc6ec2eb2b0d479db0d}{ssd1306\+\_\+update}} (void)
+\begin{DoxyCompactList}\small\item\em Envía el buffer gráfico completo al display mediante I2C. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_ac15478569af3e848c568620c1d6b6bd0}{ssd1306\+\_\+draw\+\_\+pixel}} (int16\+\_\+t x, int16\+\_\+t y, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja un pixel en las coordenadas dadas. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_ae3892b609f837bb4a0cbef88faf4f8e4}{ssd1306\+\_\+draw\+\_\+line}} (int16\+\_\+t x0, int16\+\_\+t y0, int16\+\_\+t x1, int16\+\_\+t y1, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja una linea entre dos puntos usando el algoritmo de Bresenham. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_a5c3f89100a0243669ce8a89919ea1d27}{ssd1306\+\_\+draw\+\_\+fast\+\_\+h\+\_\+line}} (int16\+\_\+t x, int16\+\_\+t y, int16\+\_\+t w, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja una linea horizontal. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_a47510c9d51d05f48da581d6f22d8ff15}{ssd1306\+\_\+draw\+\_\+fast\+\_\+v\+\_\+line}} (int16\+\_\+t x, int16\+\_\+t y, int16\+\_\+t h, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja una linea vertical. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_a006e16bf50c91a921489c323f8c4ec38}{ssd1306\+\_\+draw\+\_\+rect}} (int16\+\_\+t x, int16\+\_\+t y, int16\+\_\+t w, int16\+\_\+t h, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja el contorno de un rectangulo. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_ad22ecd18c86a49f16e0e9675d1a4c18c}{ssd1306\+\_\+fill\+\_\+rect}} (int16\+\_\+t x, int16\+\_\+t y, int16\+\_\+t w, int16\+\_\+t h, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja un rectangulo relleno. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_acdf5013252ceb058b96a6915475f8d7d}{ssd1306\+\_\+draw\+\_\+circle}} (int16\+\_\+t x0, int16\+\_\+t y0, int16\+\_\+t r, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja el contorno de un circulo. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_a4d2214dc93b0c6e0d9b301b60ba396d4}{ssd1306\+\_\+fill\+\_\+circle}} (int16\+\_\+t x0, int16\+\_\+t y0, int16\+\_\+t r, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja un circulo relleno. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_a03172a6f3269bb5c337c6f5b580bb3e6}{ssd1306\+\_\+draw\+\_\+char}} (int16\+\_\+t x, int16\+\_\+t y, char c, uint8\+\_\+t color, uint8\+\_\+t bg\+\_\+color)
+\begin{DoxyCompactList}\small\item\em Dibuja un caracter en la posicion indicada usando una celda de 6x8. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_a5c1cab0c2b126ba47c56afaf6bcd2501}{ssd1306\+\_\+draw\+\_\+string}} (int16\+\_\+t x, int16\+\_\+t y, const char \texorpdfstring{$\ast$}{*}str, uint8\+\_\+t color, uint8\+\_\+t bg\+\_\+color)
+\begin{DoxyCompactList}\small\item\em Dibuja una cadena de texto con salto de linea automatico. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{ssd1306_8h_ac84bd05558fed94970d55db31e5bcaef}{ssd1306\+\_\+draw\+\_\+bitmap}} (int16\+\_\+t x, int16\+\_\+t y, const uint8\+\_\+t \texorpdfstring{$\ast$}{*}bitmap, int16\+\_\+t w, int16\+\_\+t h, uint8\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Dibuja los pixeles activos de un bitmap monocromo en el buffer. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{ssd1306_8h_afd07675d2374961787183e277cf6beb8}{ssd1306\+\_\+set\+\_\+contrast}} (uint8\+\_\+t contrast)
+\begin{DoxyCompactList}\small\item\em Configura el contraste del display. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{ssd1306_8h_ac689c6dc5f86410336cb5356bc078627}{ssd1306\+\_\+invert\+\_\+display}} (bool invert)
+\begin{DoxyCompactList}\small\item\em Activa o desactiva la inversion de la imagen en el display. \end{DoxyCompactList}\item 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{ssd1306_8h_a2db9386c2858be0f23936e6ca71965b7}{ssd1306\+\_\+get\+\_\+buffer}} (void)
+\begin{DoxyCompactList}\small\item\em Obtiene el puntero modificable al buffer grafico interno. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+API grafica para un display OLED SSD1306 de 128x64 conectado por I2C. 
+
+Las operaciones de dibujo modifican un buffer en RAM. Para mostrar los cambios en el display se debe llamar a \doxylink{ssd1306_8h_ae55a7077a830bfc6ec2eb2b0d479db0d}{ssd1306\+\_\+update()}. 
+
+\label{ssd1306_8h_doc-define-members}
+\Hypertarget{ssd1306_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ssd1306_8h_a8fa5d8d60ba1f95d0bf58d83a39678b9}\index{ssd1306.h@{ssd1306.h}!SSD1306\_BUFFER\_SIZE@{SSD1306\_BUFFER\_SIZE}}
+\index{SSD1306\_BUFFER\_SIZE@{SSD1306\_BUFFER\_SIZE}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{SSD1306\_BUFFER\_SIZE}{SSD1306\_BUFFER\_SIZE}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a8fa5d8d60ba1f95d0bf58d83a39678b9} 
+\+\#define SSD1306\+\_\+\+BUFFER\+\_\+\+SIZE~(\doxymbox{\hyperlink{ssd1306_8h_ae5a2aa8865dd03537b97fd1c9037371b}{SSD1306\+\_\+\+WIDTH}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{ssd1306_8h_a4e9409448a0df95c1686670e09b457b7}{SSD1306\+\_\+\+HEIGHT}} /\+ 8)}
+
+Tamano del buffer monocromo, expresado en bytes. \Hypertarget{ssd1306_8h_ac82a7514c5caa1e7df321d9c6153e56b}\index{ssd1306.h@{ssd1306.h}!SSD1306\_COLOR\_BLACK@{SSD1306\_COLOR\_BLACK}}
+\index{SSD1306\_COLOR\_BLACK@{SSD1306\_COLOR\_BLACK}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{SSD1306\_COLOR\_BLACK}{SSD1306\_COLOR\_BLACK}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ac82a7514c5caa1e7df321d9c6153e56b} 
+\+\#define SSD1306\+\_\+\+COLOR\+\_\+\+BLACK~0}
+
+Pixel apagado. \Hypertarget{ssd1306_8h_a7acecbcb248033b242a01793c93150fc}\index{ssd1306.h@{ssd1306.h}!SSD1306\_COLOR\_INVERT@{SSD1306\_COLOR\_INVERT}}
+\index{SSD1306\_COLOR\_INVERT@{SSD1306\_COLOR\_INVERT}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{SSD1306\_COLOR\_INVERT}{SSD1306\_COLOR\_INVERT}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a7acecbcb248033b242a01793c93150fc} 
+\+\#define SSD1306\+\_\+\+COLOR\+\_\+\+INVERT~2}
+
+Invierte el estado actual del pixel. \Hypertarget{ssd1306_8h_ae6157b7de716b55b5c9665cbb0f50158}\index{ssd1306.h@{ssd1306.h}!SSD1306\_COLOR\_WHITE@{SSD1306\_COLOR\_WHITE}}
+\index{SSD1306\_COLOR\_WHITE@{SSD1306\_COLOR\_WHITE}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{SSD1306\_COLOR\_WHITE}{SSD1306\_COLOR\_WHITE}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ae6157b7de716b55b5c9665cbb0f50158} 
+\+\#define SSD1306\+\_\+\+COLOR\+\_\+\+WHITE~1}
+
+Pixel encendido. \Hypertarget{ssd1306_8h_a7a62ccbbe58181b180b0273fa1bc4866}\index{ssd1306.h@{ssd1306.h}!SSD1306\_DEFAULT\_ADDR@{SSD1306\_DEFAULT\_ADDR}}
+\index{SSD1306\_DEFAULT\_ADDR@{SSD1306\_DEFAULT\_ADDR}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{SSD1306\_DEFAULT\_ADDR}{SSD1306\_DEFAULT\_ADDR}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a7a62ccbbe58181b180b0273fa1bc4866} 
+\+\#define SSD1306\+\_\+\+DEFAULT\+\_\+\+ADDR~0x3C}
+
+Direccion I2C predeterminada del modulo (algunos usan 0x3D). \Hypertarget{ssd1306_8h_a4e9409448a0df95c1686670e09b457b7}\index{ssd1306.h@{ssd1306.h}!SSD1306\_HEIGHT@{SSD1306\_HEIGHT}}
+\index{SSD1306\_HEIGHT@{SSD1306\_HEIGHT}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{SSD1306\_HEIGHT}{SSD1306\_HEIGHT}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a4e9409448a0df95c1686670e09b457b7} 
+\+\#define SSD1306\+\_\+\+HEIGHT~64}
+
+Alto del display en pixeles. \Hypertarget{ssd1306_8h_ae5a2aa8865dd03537b97fd1c9037371b}\index{ssd1306.h@{ssd1306.h}!SSD1306\_WIDTH@{SSD1306\_WIDTH}}
+\index{SSD1306\_WIDTH@{SSD1306\_WIDTH}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{SSD1306\_WIDTH}{SSD1306\_WIDTH}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ae5a2aa8865dd03537b97fd1c9037371b} 
+\+\#define SSD1306\+\_\+\+WIDTH~128}
+
+Ancho del display en pixeles. 
+
+\label{ssd1306_8h_doc-func-members}
+\Hypertarget{ssd1306_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{ssd1306_8h_ac84bd05558fed94970d55db31e5bcaef}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_bitmap@{ssd1306\_draw\_bitmap}}
+\index{ssd1306\_draw\_bitmap@{ssd1306\_draw\_bitmap}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_bitmap()}{ssd1306\_draw\_bitmap()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ac84bd05558fed94970d55db31e5bcaef} 
+void ssd1306\+\_\+draw\+\_\+bitmap (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bitmap}{, }\item[{int16\+\_\+t}]{w}{, }\item[{int16\+\_\+t}]{h}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja los pixeles activos de un bitmap monocromo en el buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal de destino. \\
+\hline
+{\em y} & Coordenada vertical de destino. \\
+\hline
+{\em bitmap} & Datos del bitmap, organizados por filas con el bit mas significativo primero. \\
+\hline
+{\em w} & Ancho del bitmap en pixeles. \\
+\hline
+{\em h} & Alto del bitmap en pixeles. \\
+\hline
+{\em color} & Color aplicado a los bits activos; los bits inactivos no modifican el buffer. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_a03172a6f3269bb5c337c6f5b580bb3e6}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_char@{ssd1306\_draw\_char}}
+\index{ssd1306\_draw\_char@{ssd1306\_draw\_char}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_char()}{ssd1306\_draw\_char()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a03172a6f3269bb5c337c6f5b580bb3e6} 
+void ssd1306\+\_\+draw\+\_\+char (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{char}]{c}{, }\item[{uint8\+\_\+t}]{color}{, }\item[{uint8\+\_\+t}]{bg\+\_\+color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja un caracter en la posicion indicada usando una celda de 6x8. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal de la esquina superior izquierda. \\
+\hline
+{\em y} & Coordenada vertical de la esquina superior izquierda. \\
+\hline
+{\em c} & Caracter ASCII imprimible; los valores fuera del rango se sustituyen por \textquotesingle{}?\textquotesingle{}. \\
+\hline
+{\em color} & Color logico de los pixeles activos. \\
+\hline
+{\em bg\+\_\+color} & Color de fondo; si coincide con {\ttfamily color}, el fondo no se dibuja. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_acdf5013252ceb058b96a6915475f8d7d}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_circle@{ssd1306\_draw\_circle}}
+\index{ssd1306\_draw\_circle@{ssd1306\_draw\_circle}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_circle()}{ssd1306\_draw\_circle()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_acdf5013252ceb058b96a6915475f8d7d} 
+void ssd1306\+\_\+draw\+\_\+circle (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x0}{, }\item[{int16\+\_\+t}]{y0}{, }\item[{int16\+\_\+t}]{r}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja el contorno de un circulo. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x0} & Coordenada horizontal del centro. \\
+\hline
+{\em y0} & Coordenada vertical del centro. \\
+\hline
+{\em r} & Radio en pixeles. \\
+\hline
+{\em color} & Operacion de color aplicada a los pixeles. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_a5c3f89100a0243669ce8a89919ea1d27}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_fast\_h\_line@{ssd1306\_draw\_fast\_h\_line}}
+\index{ssd1306\_draw\_fast\_h\_line@{ssd1306\_draw\_fast\_h\_line}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_fast\_h\_line()}{ssd1306\_draw\_fast\_h\_line()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a5c3f89100a0243669ce8a89919ea1d27} 
+void ssd1306\+\_\+draw\+\_\+fast\+\_\+h\+\_\+line (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{int16\+\_\+t}]{w}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja una linea horizontal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal inicial. \\
+\hline
+{\em y} & Coordenada vertical. \\
+\hline
+{\em w} & Longitud en pixeles; debe ser positiva. \\
+\hline
+{\em color} & Operacion de color aplicada a los pixeles. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_a47510c9d51d05f48da581d6f22d8ff15}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_fast\_v\_line@{ssd1306\_draw\_fast\_v\_line}}
+\index{ssd1306\_draw\_fast\_v\_line@{ssd1306\_draw\_fast\_v\_line}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_fast\_v\_line()}{ssd1306\_draw\_fast\_v\_line()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a47510c9d51d05f48da581d6f22d8ff15} 
+void ssd1306\+\_\+draw\+\_\+fast\+\_\+v\+\_\+line (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{int16\+\_\+t}]{h}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja una linea vertical. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal. \\
+\hline
+{\em y} & Coordenada vertical inicial. \\
+\hline
+{\em h} & Longitud en pixeles; debe ser positiva. \\
+\hline
+{\em color} & Operacion de color aplicada a los pixeles. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_ae3892b609f837bb4a0cbef88faf4f8e4}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_line@{ssd1306\_draw\_line}}
+\index{ssd1306\_draw\_line@{ssd1306\_draw\_line}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_line()}{ssd1306\_draw\_line()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ae3892b609f837bb4a0cbef88faf4f8e4} 
+void ssd1306\+\_\+draw\+\_\+line (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x0}{, }\item[{int16\+\_\+t}]{y0}{, }\item[{int16\+\_\+t}]{x1}{, }\item[{int16\+\_\+t}]{y1}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja una linea entre dos puntos usando el algoritmo de Bresenham. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x0} & Coordenada horizontal inicial. \\
+\hline
+{\em y0} & Coordenada vertical inicial. \\
+\hline
+{\em x1} & Coordenada horizontal final. \\
+\hline
+{\em y1} & Coordenada vertical final. \\
+\hline
+{\em color} & Operacion de color aplicada a los pixeles. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_ac15478569af3e848c568620c1d6b6bd0}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_pixel@{ssd1306\_draw\_pixel}}
+\index{ssd1306\_draw\_pixel@{ssd1306\_draw\_pixel}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_pixel()}{ssd1306\_draw\_pixel()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ac15478569af3e848c568620c1d6b6bd0} 
+void ssd1306\+\_\+draw\+\_\+pixel (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja un pixel en las coordenadas dadas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal, desde 0. \\
+\hline
+{\em y} & Coordenada vertical, desde 0. \\
+\hline
+{\em color} & SSD1306\+\_\+\+COLOR\+\_\+\+BLACK, SSD1306\+\_\+\+COLOR\+\_\+\+WHITE o SSD1306\+\_\+\+COLOR\+\_\+\+INVERT. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Las coordenadas fuera del display se ignoran. 
+\end{DoxyNote}
+\Hypertarget{ssd1306_8h_a006e16bf50c91a921489c323f8c4ec38}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_rect@{ssd1306\_draw\_rect}}
+\index{ssd1306\_draw\_rect@{ssd1306\_draw\_rect}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_rect()}{ssd1306\_draw\_rect()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a006e16bf50c91a921489c323f8c4ec38} 
+void ssd1306\+\_\+draw\+\_\+rect (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{int16\+\_\+t}]{w}{, }\item[{int16\+\_\+t}]{h}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja el contorno de un rectangulo. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal de la esquina superior izquierda. \\
+\hline
+{\em y} & Coordenada vertical de la esquina superior izquierda. \\
+\hline
+{\em w} & Ancho del rectangulo en pixeles. \\
+\hline
+{\em h} & Alto del rectangulo en pixeles. \\
+\hline
+{\em color} & Operacion de color aplicada a los pixeles. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_a5c1cab0c2b126ba47c56afaf6bcd2501}\index{ssd1306.h@{ssd1306.h}!ssd1306\_draw\_string@{ssd1306\_draw\_string}}
+\index{ssd1306\_draw\_string@{ssd1306\_draw\_string}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_draw\_string()}{ssd1306\_draw\_string()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a5c1cab0c2b126ba47c56afaf6bcd2501} 
+void ssd1306\+\_\+draw\+\_\+string (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{uint8\+\_\+t}]{color}{, }\item[{uint8\+\_\+t}]{bg\+\_\+color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja una cadena de texto con salto de linea automatico. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal inicial. \\
+\hline
+{\em y} & Coordenada vertical inicial. \\
+\hline
+{\em str} & Cadena terminada en nulo; no puede ser NULL. \\
+\hline
+{\em color} & Color logico de los pixeles activos. \\
+\hline
+{\em bg\+\_\+color} & Color de fondo; si coincide con {\ttfamily color}, el fondo no se dibuja. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+El salto de linea explicito y el ajuste al borde avanzan 9 pixeles. 
+\end{DoxyNote}
+\Hypertarget{ssd1306_8h_a4d2214dc93b0c6e0d9b301b60ba396d4}\index{ssd1306.h@{ssd1306.h}!ssd1306\_fill\_circle@{ssd1306\_fill\_circle}}
+\index{ssd1306\_fill\_circle@{ssd1306\_fill\_circle}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_fill\_circle()}{ssd1306\_fill\_circle()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a4d2214dc93b0c6e0d9b301b60ba396d4} 
+void ssd1306\+\_\+fill\+\_\+circle (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x0}{, }\item[{int16\+\_\+t}]{y0}{, }\item[{int16\+\_\+t}]{r}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja un circulo relleno. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x0} & Coordenada horizontal del centro. \\
+\hline
+{\em y0} & Coordenada vertical del centro. \\
+\hline
+{\em r} & Radio en pixeles. \\
+\hline
+{\em color} & Operacion de color aplicada a los pixeles. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_ad22ecd18c86a49f16e0e9675d1a4c18c}\index{ssd1306.h@{ssd1306.h}!ssd1306\_fill\_rect@{ssd1306\_fill\_rect}}
+\index{ssd1306\_fill\_rect@{ssd1306\_fill\_rect}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_fill\_rect()}{ssd1306\_fill\_rect()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ad22ecd18c86a49f16e0e9675d1a4c18c} 
+void ssd1306\+\_\+fill\+\_\+rect (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{x}{, }\item[{int16\+\_\+t}]{y}{, }\item[{int16\+\_\+t}]{w}{, }\item[{int16\+\_\+t}]{h}{, }\item[{uint8\+\_\+t}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Dibuja un rectangulo relleno. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Coordenada horizontal de la esquina superior izquierda. \\
+\hline
+{\em y} & Coordenada vertical de la esquina superior izquierda. \\
+\hline
+{\em w} & Ancho del rectangulo en pixeles. \\
+\hline
+{\em h} & Alto del rectangulo en pixeles. \\
+\hline
+{\em color} & Operacion de color aplicada a los pixeles. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{ssd1306_8h_a2db9386c2858be0f23936e6ca71965b7}\index{ssd1306.h@{ssd1306.h}!ssd1306\_get\_buffer@{ssd1306\_get\_buffer}}
+\index{ssd1306\_get\_buffer@{ssd1306\_get\_buffer}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_get\_buffer()}{ssd1306\_get\_buffer()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_a2db9386c2858be0f23936e6ca71965b7} 
+uint8\+\_\+t \texorpdfstring{$\ast$}{*} ssd1306\+\_\+get\+\_\+buffer (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Obtiene el puntero modificable al buffer grafico interno. 
+
+\begin{DoxyReturn}{Returns}
+Puntero al buffer de SSD1306\+\_\+\+BUFFER\+\_\+\+SIZE bytes, almacenado por paginas. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Los cambios directos solo se envian al display al llamar a \doxylink{ssd1306_8h_ae55a7077a830bfc6ec2eb2b0d479db0d}{ssd1306\+\_\+update()}. 
+\end{DoxyNote}
+\Hypertarget{ssd1306_8h_aa0e802c0a19bd2b5a4b43bb490227445}\index{ssd1306.h@{ssd1306.h}!ssd1306\_init@{ssd1306\_init}}
+\index{ssd1306\_init@{ssd1306\_init}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_init()}{ssd1306\_init()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_aa0e802c0a19bd2b5a4b43bb490227445} 
+esp\+\_\+err\+\_\+t ssd1306\+\_\+init (\begin{DoxyParamCaption}\item[{i2c\+\_\+port\+\_\+t}]{port}{, }\item[{uint8\+\_\+t}]{addr}{}\end{DoxyParamCaption})}
+
+
+
+Inicializa el display OLED SSD1306 en el bus I2C especificado. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & Puerto I2C ya inicializado (por ej. I2\+C\+\_\+\+NUM\+\_\+0) \\
+\hline
+{\em addr} & Dirección I2C del display (típicamente 0x3C) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si la inicialización fue exitosa, o código de error 
+\end{DoxyReturn}
+\Hypertarget{ssd1306_8h_ac689c6dc5f86410336cb5356bc078627}\index{ssd1306.h@{ssd1306.h}!ssd1306\_invert\_display@{ssd1306\_invert\_display}}
+\index{ssd1306\_invert\_display@{ssd1306\_invert\_display}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_invert\_display()}{ssd1306\_invert\_display()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ac689c6dc5f86410336cb5356bc078627} 
+esp\+\_\+err\+\_\+t ssd1306\+\_\+invert\+\_\+display (\begin{DoxyParamCaption}\item[{bool}]{invert}{}\end{DoxyParamCaption})}
+
+
+
+Activa o desactiva la inversion de la imagen en el display. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em invert} & true para invertir la imagen; false para el modo normal. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si el comando se envia correctamente; en otro caso, el error I2C. 
+\end{DoxyReturn}
+\Hypertarget{ssd1306_8h_afd07675d2374961787183e277cf6beb8}\index{ssd1306.h@{ssd1306.h}!ssd1306\_set\_contrast@{ssd1306\_set\_contrast}}
+\index{ssd1306\_set\_contrast@{ssd1306\_set\_contrast}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_set\_contrast()}{ssd1306\_set\_contrast()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_afd07675d2374961787183e277cf6beb8} 
+esp\+\_\+err\+\_\+t ssd1306\+\_\+set\+\_\+contrast (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{contrast}{}\end{DoxyParamCaption})}
+
+
+
+Configura el contraste del display. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em contrast} & Valor de contraste entre 0 y 255. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si el comando se envia correctamente; en otro caso, el error I2C. 
+\end{DoxyReturn}
+\Hypertarget{ssd1306_8h_ae55a7077a830bfc6ec2eb2b0d479db0d}\index{ssd1306.h@{ssd1306.h}!ssd1306\_update@{ssd1306\_update}}
+\index{ssd1306\_update@{ssd1306\_update}!ssd1306.h@{ssd1306.h}}
+\doxysubsubsection{\texorpdfstring{ssd1306\_update()}{ssd1306\_update()}}
+{\footnotesize\ttfamily \label{ssd1306_8h_ae55a7077a830bfc6ec2eb2b0d479db0d} 
+esp\+\_\+err\+\_\+t ssd1306\+\_\+update (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Envía el buffer gráfico completo al display mediante I2C. 
+
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si la transmisión fue correcta 
+\end{DoxyReturn}

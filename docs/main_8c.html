@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.18.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>IoT ESP32-S3 Control: src/main.c File Reference</title>
+<title>My Project: src/main.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="codefolding.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">IoT ESP32-S3 Control
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -130,20 +130,24 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('main_8c.html',
 <code>#include &quot;esp_adc/adc_cali_scheme.h&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
+Classes</h2></td></tr>
 <tr class="memitem:relay_5Fcommand_5Ft" id="r_relay_5Fcommand_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structrelay__command__t.html">relay_command_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estructura enviada a la cola de FreeRTOS para conmutar un relé.  <a href="structrelay__command__t.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:afc3d101f633a076cc1ca84b85b6224b2" id="r_afc3d101f633a076cc1ca84b85b6224b2"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#afc3d101f633a076cc1ca84b85b6224b2">TAG</a>&#160;&#160;&#160;&quot;CONTROL&quot;</td></tr>
-<tr class="memdesc:afc3d101f633a076cc1ca84b85b6224b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag principal para los mensajes de registro (ESP_LOG).  <br /></td></tr>
-<tr class="memitem:ada6adef0b1e97045b188882dcb147776" id="r_ada6adef0b1e97045b188882dcb147776"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ada6adef0b1e97045b188882dcb147776">NUM_RELAYS</a>&#160;&#160;&#160;5</td></tr>
-<tr class="memdesc:ada6adef0b1e97045b188882dcb147776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cantidad total de relés en el sistema.  <br /></td></tr>
-<tr class="memitem:aca539d0f1df37b8d20b9573d660c5d77" id="r_aca539d0f1df37b8d20b9573d660c5d77"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#aca539d0f1df37b8d20b9573d660c5d77">RELAY_ON</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:aca539d0f1df37b8d20b9573d660c5d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado lógico para activar relés (Activo en LOW).  <br /></td></tr>
-<tr class="memitem:ac06e6d67b5a210db4d1005598d120bc5" id="r_ac06e6d67b5a210db4d1005598d120bc5"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ac06e6d67b5a210db4d1005598d120bc5">RELAY_OFF</a>&#160;&#160;&#160;1</td></tr>
-<tr class="memdesc:ac06e6d67b5a210db4d1005598d120bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado lógico para desactivar relés.  <br /></td></tr>
+<tr class="memitem:afc3d101f633a076cc1ca84b85b6224b2" id="r_afc3d101f633a076cc1ca84b85b6224b2"><td class="memItemLeft"><a id="afc3d101f633a076cc1ca84b85b6224b2" name="afc3d101f633a076cc1ca84b85b6224b2"></a>
+#define&#160;</td><td class="memItemRight"><b>TAG</b>&#160;&#160;&#160;&quot;CONTROL&quot;</td></tr>
+<tr class="memdesc:afc3d101f633a076cc1ca84b85b6224b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag principal para los mensajes de registro (ESP_LOG). <br /></td></tr>
+<tr class="memitem:ada6adef0b1e97045b188882dcb147776" id="r_ada6adef0b1e97045b188882dcb147776"><td class="memItemLeft"><a id="ada6adef0b1e97045b188882dcb147776" name="ada6adef0b1e97045b188882dcb147776"></a>
+#define&#160;</td><td class="memItemRight"><b>NUM_RELAYS</b>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:ada6adef0b1e97045b188882dcb147776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cantidad total de relés en el sistema. <br /></td></tr>
+<tr class="memitem:aca539d0f1df37b8d20b9573d660c5d77" id="r_aca539d0f1df37b8d20b9573d660c5d77"><td class="memItemLeft"><a id="aca539d0f1df37b8d20b9573d660c5d77" name="aca539d0f1df37b8d20b9573d660c5d77"></a>
+#define&#160;</td><td class="memItemRight"><b>RELAY_ON</b>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:aca539d0f1df37b8d20b9573d660c5d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado lógico para activar relés (Activo en LOW). <br /></td></tr>
+<tr class="memitem:ac06e6d67b5a210db4d1005598d120bc5" id="r_ac06e6d67b5a210db4d1005598d120bc5"><td class="memItemLeft"><a id="ac06e6d67b5a210db4d1005598d120bc5" name="ac06e6d67b5a210db4d1005598d120bc5"></a>
+#define&#160;</td><td class="memItemRight"><b>RELAY_OFF</b>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ac06e6d67b5a210db4d1005598d120bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estado lógico para desactivar relés. <br /></td></tr>
 <tr id="define-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Pines GPIO para Relés</div></td></tr>
 <tr class="memitem:ad1dd70b3e8c189901e13ecad2b85d68b" id="r_ad1dd70b3e8c189901e13ecad2b85d68b"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ad1dd70b3e8c189901e13ecad2b85d68b">RELAY_1_GPIO</a>&#160;&#160;&#160;GPIO_NUM_35</td></tr>
 <tr class="memitem:a4568eaf981415063f5ab0dba7e3971d9" id="r_a4568eaf981415063f5ab0dba7e3971d9"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a4568eaf981415063f5ab0dba7e3971d9">RELAY_2_GPIO</a>&#160;&#160;&#160;GPIO_NUM_36</td></tr>
@@ -276,22 +280,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ada6adef0b1e97045b188882dcb147776" name="ada6adef0b1e97045b188882dcb147776"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada6adef0b1e97045b188882dcb147776">&#9670;&#160;</a></span>NUM_RELAYS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NUM_RELAYS&#160;&#160;&#160;5</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Cantidad total de relés en el sistema. </p>
-
-</div>
-</div>
 <a id="ad1dd70b3e8c189901e13ecad2b85d68b" name="ad1dd70b3e8c189901e13ecad2b85d68b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad1dd70b3e8c189901e13ecad2b85d68b">&#9670;&#160;</a></span>RELAY_1_GPIO</h2>
 
@@ -367,54 +355,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac06e6d67b5a210db4d1005598d120bc5" name="ac06e6d67b5a210db4d1005598d120bc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac06e6d67b5a210db4d1005598d120bc5">&#9670;&#160;</a></span>RELAY_OFF</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RELAY_OFF&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Estado lógico para desactivar relés. </p>
-
-</div>
-</div>
-<a id="aca539d0f1df37b8d20b9573d660c5d77" name="aca539d0f1df37b8d20b9573d660c5d77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca539d0f1df37b8d20b9573d660c5d77">&#9670;&#160;</a></span>RELAY_ON</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RELAY_ON&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Estado lógico para activar relés (Activo en LOW). </p>
-
-</div>
-</div>
-<a id="afc3d101f633a076cc1ca84b85b6224b2" name="afc3d101f633a076cc1ca84b85b6224b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc3d101f633a076cc1ca84b85b6224b2">&#9670;&#160;</a></span>TAG</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TAG&#160;&#160;&#160;&quot;CONTROL&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Tag principal para los mensajes de registro (ESP_LOG). </p>
-
-</div>
-</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a630544a7f0a2cc40d8a7fefab7e2fe70" name="a630544a7f0a2cc40d8a7fefab7e2fe70"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a630544a7f0a2cc40d8a7fefab7e2fe70">&#9670;&#160;</a></span>app_main()</h2>
@@ -449,7 +389,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="main_8c.html">main.c</a></li>
+    <li class="navelem"><b>src</b></li><li class="navelem"><a href="main_8c.html">main.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
   </ul>
 </div>

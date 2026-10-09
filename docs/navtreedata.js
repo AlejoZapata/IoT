@@ -24,18 +24,40 @@
 */
 var NAVTREE =
 [
-  [ "IoT ESP32-S3 Control", "index.html", [
-    [ "Data Structures", "annotated.html", [
-      [ "Data Structures", "annotated.html", "annotated_dup" ],
-      [ "Data Structure Index", "classes.html", null ],
-      [ "Data Fields", "functions.html", [
+  [ "My Project", "index.html", [
+    [ "Sistema de Control Ambiental Inteligente y Monitoreo IoT", "md__r_e_a_d_m_e.html", [
+      [ "📌 Arquitectura del Sistema", "md__r_e_a_d_m_e.html#autotoc_md2", null ],
+      [ "🚀 Características Principales", "md__r_e_a_d_m_e.html#autotoc_md4", null ],
+      [ "🔌 Asignación de Pines (Pinout)", "md__r_e_a_d_m_e.html#autotoc_md6", [
+        [ "1. ESP32-S3 (Controlador Principal)", "md__r_e_a_d_m_e.html#autotoc_md7", null ],
+        [ "2. RP2040 (Pantalla TFT ILI9341 - MicroPython)", "md__r_e_a_d_m_e.html#autotoc_md9", null ]
+      ] ],
+      [ "📊 Las 9 Variables Monitoreadas", "md__r_e_a_d_m_e.html#autotoc_md11", null ],
+      [ "💻 Consola Serial Interactiva (CLI)", "md__r_e_a_d_m_e.html#autotoc_md13", [
+        [ "Comandos de Ajuste de Consignas:", "md__r_e_a_d_m_e.html#autotoc_md14", null ],
+        [ "Comandos de Diagnóstico y Control:", "md__r_e_a_d_m_e.html#autotoc_md15", null ]
+      ] ],
+      [ "📁 Estructura del Repositorio", "md__r_e_a_d_m_e.html#autotoc_md17", null ],
+      [ "🛠️ Instalación y Compilación", "md__r_e_a_d_m_e.html#autotoc_md19", [
+        [ "Requisitos", "md__r_e_a_d_m_e.html#autotoc_md20", null ],
+        [ "1. Cargar el Firmware en el ESP32-S3", "md__r_e_a_d_m_e.html#autotoc_md21", null ],
+        [ "2. Configurar la Pantalla en el RP2040", "md__r_e_a_d_m_e.html#autotoc_md22", null ]
+      ] ],
+      [ "👥 Autores y Colaboradores", "md__r_e_a_d_m_e.html#autotoc_md24", null ]
+    ] ],
+    [ "Comands", "md_src_2_comands.html", null ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
-      [ "Globals", "globals.html", [
+      [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
         [ "Macros", "globals_defs.html", null ]

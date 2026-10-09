@@ -1,0 +1,220 @@
+\chapter{Sistema de Control Ambiental Inteligente y Monitoreo IoT }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Sistema de Control Ambiental Inteligente y Monitoreo IoT@{Sistema de Control Ambiental Inteligente y Monitoreo IoT}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+Sistema embebido industrial/\+\+IoT para control de climatización, temperatura y humedad con arquitectura distribuida de doble microcontrolador: {\bfseries{ESP32-\/\+S3}} (núcleo de control en tiempo real con Free\+RTOS y ESP-\/\+IDF) y {\bfseries{RP2040}} (módulo gráfico dedicado para pantalla TFT ILI9341 con Micro\+Python).
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{📌 Arquitectura del Sistema}{📌 Arquitectura del Sistema}}\label{md__r_e_a_d_m_e_autotoc_md2}
+El proyecto opera bajo un esquema maestro-\/esclavo desacoplado:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ Sensores\ de\ Entrada\ \ \ \ \ \ \ \ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ -\/\ DHT11\ (Temp/Hum\ Ambiente)\ \ \ \ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ -\/\ LM35\ \#1\ (Temp\ Disipador)\ \ \ \ \ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ -\/\ LM35\ \#2\ (Temp\ Producto)\ \ \ \ \ \ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+\ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+\ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{|\ \ Consola\ de\ \ \ \ \ \ |\ \ UART0\ \ \ |\ \ \ \ \ ESP32-\/S3\ \ \ \ \ \ |\ \ UART1\ \ \ |\ \ RP2040\ Pico\ \ \ \ \ \ |}
+\DoxyCodeLine{|\ \ Usuario\ (CLI)\ \ \ |<-\/-\/-\/-\/-\/-\/-\/-\/>|\ \ (FreeRTOS\ Core)\ \ |-\/-\/-\/-\/-\/-\/-\/-\/-\/>|\ \ (MicroPython)\ \ \ \ |}
+\DoxyCodeLine{|\ \ PC\ /\ COM17\ \ \ \ \ \ |\ 115200\ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/+\ 115200\ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+\ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ Módulo\ de\ Relés\ \ \ |\ \ \ \ \ \ \ \ \ \ |\ Pantalla\ TFT\ \ \ \ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ (Actuadores\ 1-\/5)\ \ |\ \ \ \ \ \ \ \ \ \ |\ ILI9341\ (320x240)\ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ -\/\ Celda\ Peltier\ \ \ |\ \ \ \ \ \ \ \ \ \ |\ 9\ Variables\ con\ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ -\/\ Disipador\ \ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ |\ Iconos\ Dinámicos\ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ -\/\ Calefactor\ \ \ \ \ \ |\ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ -\/\ Deshumidificador|}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |\ -\/\ Humidificador\ \ \ |}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{🚀 Características Principales}{🚀 Características Principales}}\label{md__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyItemize}
+\item {\bfseries{Control Térmico y de Humedad con Histéresis:}}
+\begin{DoxyItemize}
+\item Banda muerta de temperatura: \$\textbackslash{}pm 0.\+5\textbackslash{},\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}circ\textbackslash{}text\{C\}\$
+\item Banda muerta de humedad: \$\textbackslash{}pm 2.\+0\textbackslash{},\%\$
+\end{DoxyItemize}
+\item {\bfseries{Seguridad y Protección Activa de Hardware:}}
+\begin{DoxyItemize}
+\item Monitoreo continuo de la temperatura del disipador de la celda Peltier.
+\item Corte de emergencia automático si \$\+T\_\{\textbackslash{}text\{disipador\}\} \texorpdfstring{$>$}{>} 50.\+0\textbackslash{},\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}circ\textbackslash{}text\{C\}\$ (apaga la celda inmediatamente y fuerza la ventilación de alivio hasta que la temperatura baje a \$45.0\textbackslash{},\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}circ\textbackslash{}text\{C\}\$).
+\end{DoxyItemize}
+\item {\bfseries{Multitarea con Free\+RTOS (ESP32-\/\+S3):}}
+\begin{DoxyItemize}
+\item {\ttfamily sensors\+\_\+task}: Muestreo de sensores DHT11 y ADC calibrados (e\+Fuse + oversampling x16 para LM35).
+\item {\ttfamily control\+\_\+task}: Máquina de estados de climatización y control de relés ({\itshape Active LOW}).
+\item {\ttfamily display\+\_\+task}: Formateo y transmisión periódica de tramas UART (1 Hz).
+\item {\ttfamily cli\+\_\+task}: Consola interactiva por puerto serial para ajuste dinámico de consignas.
+\end{DoxyItemize}
+\item {\bfseries{Tablero Gráfico en Tiempo Real (RP2040 + TFT ILI9341):}}
+\begin{DoxyItemize}
+\item Matriz de 3x3 tarjetas de alto contraste con refresco diferencial (sin parpadeo).
+\item 9 variables en vivo con animaciones e iconos dinámicos según magnitudes.
+\item Modo demostración ({\itshape Demo Mode}) automático en ausencia de señal UART.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{🔌 Asignación de Pines (Pinout)}{🔌 Asignación de Pines (Pinout)}}\label{md__r_e_a_d_m_e_autotoc_md6}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{\texorpdfstring{1. ESP32-\/\+S3 (Controlador Principal)}{1. ESP32-\/\+S3 (Controlador Principal)}}\label{md__r_e_a_d_m_e_autotoc_md7}
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{bg=\tableheadbgcolor,font=\bfseries}Periférico / Función  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Pin GPIO  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Descripción  \\
+{\bfseries{Relé 1 (DIS)}}  &\SetCell{c}{\ttfamily GPIO 35}  &Ventilación / Refrigeración del disipador Peltier  \\
+{\bfseries{Relé 2 (PEL)}}  &\SetCell{c}{\ttfamily GPIO 36}  &Alimentación de la Celda Peltier  \\
+{\bfseries{Relé 3 (RAD)}}  &\SetCell{c}{\ttfamily GPIO 37}  &Calefactor / Radiador térmico  \\
+{\bfseries{Relé 4 (V\+\_\+\+DES)}}  &\SetCell{c}{\ttfamily GPIO 38}  &Ventilador extractor para deshumidificación  \\
+{\bfseries{Relé 5 (HUM)}}  &\SetCell{c}{\ttfamily GPIO 39}  &Atomizadores ultrasónicos (Humidificadores)  \\
+{\bfseries{DHT11 DATA}}  &\SetCell{c}{\ttfamily GPIO 40}  &Bus digital de temperatura y humedad ambiente  \\
+{\bfseries{LM35 Disipador}}  &\SetCell{c}{\ttfamily GPIO 9}  &ADC1 Canal 8 (Lectura analógica con calibración)  \\
+{\bfseries{LM35 Producto}}  &\SetCell{c}{\ttfamily GPIO 11}  &ADC2 Canal 0 (Lectura analógica con calibración)  \\
+{\bfseries{UART Display TX}}  &\SetCell{c}{\ttfamily GPIO 17}  &Transmisión serial hacia el Pin Físico 2 del RP2040  \\
+{\bfseries{UART Display RX}}  &\SetCell{c}{\ttfamily GPIO 18}  &Recepción serial (opcional/\+debug)  \\
+{\bfseries{UART Consola (CLI)}}  &\SetCell{c}{\ttfamily GPIO 43/\+44}  &UART0 a través del puerto USB-\/\+Serial (115200 baud)  \\
+\end{DoxyTable}
+
+
+\begin{quote}
+{\bfseries{Nota sobre los relés:}} Operan con lógica activa en bajo ({\itshape Active LOW}): {\ttfamily 0 = ON}, {\ttfamily 1 = OFF}. \end{quote}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{\texorpdfstring{2. RP2040 (Pantalla TFT ILI9341 -\/ Micro\+Python)}{2. RP2040 (Pantalla TFT ILI9341 -\/ Micro\+Python)}}\label{md__r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyTable}{4}{}{}{1}
+\SetCell{bg=\tableheadbgcolor,font=\bfseries}Función  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Pin Físico RP2040  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}GPIO Micro\+Python  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Conexión en Pantalla / ESP32-\/\+S3  \\
+{\bfseries{UART RX}}  &\SetCell{c}{\bfseries{Pin 2}}  &\SetCell{c}{\ttfamily GPIO 1}  &{\ttfamily GPIO 17} (TX) del ESP32-\/\+S3  \\
+{\bfseries{SPI CS}}  &\SetCell{c}{\bfseries{Pin 22}}  &\SetCell{c}{\ttfamily GPIO 17}  &{\bfseries{CS}} Pantalla ILI9341  \\
+{\bfseries{SPI SCK}}  &\SetCell{c}{\bfseries{Pin 24}}  &\SetCell{c}{\ttfamily GPIO 18}  &{\bfseries{SCK / CLK}} Pantalla  \\
+{\bfseries{SPI MOSI}}  &\SetCell{c}{\bfseries{Pin 25}}  &\SetCell{c}{\ttfamily GPIO 19}  &{\bfseries{MOSI / SDI}} Pantalla  \\
+{\bfseries{TFT DC}}  &\SetCell{c}{\bfseries{Pin 26}}  &\SetCell{c}{\ttfamily GPIO 20}  &{\bfseries{DC / RS}} Pantalla  \\
+{\bfseries{TFT RESET}}  &\SetCell{c}{\bfseries{Pin 27}}  &\SetCell{c}{\ttfamily GPIO 21}  &{\bfseries{RST}} Pantalla  \\
+{\bfseries{TFT LED}}  &\SetCell{c}{\bfseries{Pin 29}}  &\SetCell{c}{\ttfamily GPIO 22}  &{\bfseries{LED / BL}} (Backlight)  \\
+{\bfseries{GND Común}}  &\SetCell{c}{\bfseries{Pin 3, 23 o 28}}  &\SetCell{c}{\ttfamily GND}  &GND común con ESP32-\/\+S3 y Pantalla  \\
+\end{DoxyTable}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysection{\texorpdfstring{📊 Las 9 Variables Monitoreadas}{📊 Las 9 Variables Monitoreadas}}\label{md__r_e_a_d_m_e_autotoc_md11}
+
+\begin{DoxyTable}{5}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\#  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Clave UART  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Variable  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Tipo  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Comportamiento Visual en Pantalla  \\
+\SetCell{c}{\bfseries{1}}  &{\ttfamily T\+\_\+\+AMB}  &Temperatura Ambiente  &\SetCell{c}Numérica (°C)  &Termómetro dinámico: Azul (\texorpdfstring{$<$}{<}20°C), Verde (20-\/30°C), Rojo (\texorpdfstring{$>$}{>}30°C)  \\
+\SetCell{c}{\bfseries{2}}  &{\ttfamily H\+\_\+\+AMB}  &Humedad Ambiente  &\SetCell{c}Numérica (\%)  &Gota de agua: Ámbar (\texorpdfstring{$<$}{<}40\%), Cian ideal (40-\/70\%), Azul (\texorpdfstring{$>$}{>}70\%)  \\
+\SetCell{c}{\bfseries{3}}  &{\ttfamily T\+\_\+\+PROD}  &Temperatura Producto  &\SetCell{c}Numérica (°C)  &Sonda térmica: Cian (\texorpdfstring{$<$}{<}8°C), Verde (8-\/18°C), Ámbar (\texorpdfstring{$>$}{>}18°C)  \\
+\SetCell{c}{\bfseries{4}}  &{\ttfamily T\+\_\+\+DIS}  &Temperatura Disipador  &\SetCell{c}Numérica (°C)  &Disipador: Verde (\texorpdfstring{$<$}{<}40°C), Ámbar (40-\/60°C), Rojo alerta (\texorpdfstring{$>$}{>}60°C)  \\
+\SetCell{c}{\bfseries{5}}  &{\ttfamily DIS}  &Ventilador Disipador  &\SetCell{c}ON / OFF  &Aspas giratorias en verde brillante al activarse  \\
+\SetCell{c}{\bfseries{6}}  &{\ttfamily PEL}  &Celda Peltier  &\SetCell{c}ON / OFF  &Copo de cristal cian resplandeciente al encender  \\
+\SetCell{c}{\bfseries{7}}  &{\ttfamily RAD}  &Radiador / Calefactor  &\SetCell{c}ON / OFF  &Serpentín incandescente con radiación de calor  \\
+\SetCell{c}{\bfseries{8}}  &{\ttfamily V\+\_\+\+DES}  &Deshumidificador  &\SetCell{c}ON / OFF  &Turbina extractora animada magenta  \\
+\SetCell{c}{\bfseries{9}}  &{\ttfamily HUM}  &Humidificador  &\SetCell{c}ON / OFF  &Boquilla vaporizadora con nubes ascendentes celestes  \\
+\end{DoxyTable}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysection{\texorpdfstring{💻 Consola Serial Interactiva (CLI)}{💻 Consola Serial Interactiva (CLI)}}\label{md__r_e_a_d_m_e_autotoc_md13}
+Al conectar el ESP32-\/\+S3 a la computadora por el puerto serial (por defecto {\ttfamily COM17} a 115200 baudios), se dispone de una interfaz de comandos:\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysubsection{\texorpdfstring{Comandos de Ajuste de Consignas:}{Comandos de Ajuste de Consignas:}}\label{md__r_e_a_d_m_e_autotoc_md14}
+
+\begin{DoxyItemize}
+\item {\ttfamily T:28} : Fija la temperatura objetivo a \$28.0\textbackslash{},\texorpdfstring{$^\wedge$}{\string^}\textbackslash{}circ\textbackslash{}text\{C\}\$ y activa el control térmico.
+\item {\ttfamily H:60} : Fija la humedad objetivo al \$60.0\textbackslash{},\%\$ y activa el control de humedad.
+\item {\ttfamily T:24, H:55} o {\ttfamily H:55, T:24} : Ajusta simultáneamente ambas consignas.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{\texorpdfstring{Comandos de Diagnóstico y Control:}{Comandos de Diagnóstico y Control:}}\label{md__r_e_a_d_m_e_autotoc_md15}
+
+\begin{DoxyItemize}
+\item {\ttfamily STATUS} : Muestra un informe completo en tabla con las lecturas analógicas, estado de relés y alertas de seguridad.
+\item {\ttfamily STOP} : Detiene de inmediato el lazo de control y apaga todos los actuadores.
+\item {\ttfamily HELP} : Muestra la guía rápida de comandos en pantalla.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysection{\texorpdfstring{📁 Estructura del Repositorio}{📁 Estructura del Repositorio}}\label{md__r_e_a_d_m_e_autotoc_md17}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{.}
+\DoxyCodeLine{├──\ platformio.ini\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Configuración\ de\ compilación\ para\ ESP32-\/S3\ en\ PlatformIO}
+\DoxyCodeLine{├──\ CMakeLists.txt\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Configuración\ raíz\ de\ CMake\ para\ ESP-\/IDF}
+\DoxyCodeLine{├──\ sdkconfig.defaults\ \ \ \ \ \ \ \ \ \ \#\ Opciones\ predeterminadas\ de\ ESP-\/IDF}
+\DoxyCodeLine{├──\ src/}
+\DoxyCodeLine{│\ \ \ ├──\ main.c\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Núcleo\ del\ firmware\ ESP32-\/S3\ (FreeRTOS,\ ADC,\ Relés,\ CLI)}
+\DoxyCodeLine{│\ \ \ ├──\ dht11.c\ /\ dht11.h\ \ \ \ \ \ \ \#\ Driver\ para\ sensor\ digital\ DHT11}
+\DoxyCodeLine{│\ \ \ ├──\ ds1307.c\ /\ ds1307.h\ \ \ \ \ \#\ Driver\ para\ RTC\ I2C\ DS1307}
+\DoxyCodeLine{│\ \ \ ├──\ hcsr04.c\ /\ hcsr04.h\ \ \ \ \ \#\ Driver\ para\ sensor\ ultrasónico\ HC-\/SR04}
+\DoxyCodeLine{│\ \ \ ├──\ ssd1306.c\ /\ ssd1306.h\ \ \ \#\ Driver\ y\ fuentes\ para\ pantalla\ OLED\ I2C\ secundaria}
+\DoxyCodeLine{│\ \ \ ├──\ Comands.md\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Especificación\ del\ protocolo\ serial\ de\ tramas}
+\DoxyCodeLine{│\ \ \ └──\ Display/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Código\ fuente\ del\ módulo\ de\ visualización\ (RP2040)}
+\DoxyCodeLine{│\ \ \ \ \ \ \ ├──\ main.py\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Script\ principal\ en\ MicroPython\ (Receptor\ UART\ y\ GUI)}
+\DoxyCodeLine{│\ \ \ \ \ \ \ ├──\ ili9341.py\ \ \ \ \ \ \ \ \ \ \#\ Controlador\ SPI\ optimizado\ para\ ILI9341}
+\DoxyCodeLine{│\ \ \ \ \ \ \ ├──\ icons.py\ \ \ \ \ \ \ \ \ \ \ \ \#\ Bitmaps\ y\ mapas\ de\ animación\ (16x16)}
+\DoxyCodeLine{│\ \ \ \ \ \ \ ├──\ test\_uart\_sender.py\ \#\ Utilidad\ de\ pruebas\ seriales\ desde\ PC}
+\DoxyCodeLine{│\ \ \ \ \ \ \ └──\ README.md\ \ \ \ \ \ \ \ \ \ \ \#\ Guía\ de\ conexión\ y\ puesta\ en\ marcha\ del\ display}
+\DoxyCodeLine{└──\ README.md\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Documentación\ general\ del\ proyecto}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md19}{}\doxysection{\texorpdfstring{🛠️ Instalación y Compilación}{🛠️ Instalación y Compilación}}\label{md__r_e_a_d_m_e_autotoc_md19}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md20}{}\doxysubsection{\texorpdfstring{Requisitos}{Requisitos}}\label{md__r_e_a_d_m_e_autotoc_md20}
+
+\begin{DoxyEnumerate}
+\item \href{https://code.visualstudio.com/}{\texttt{Visual Studio Code}} con la extensión \href{https://platformio.org/}{\texttt{Platform\+IO IDE}}.
+\item \href{https://thonny.org/}{\texttt{Thonny IDE}} (o extensión de Micro\+Python) para programar la Raspberry Pi Pico.
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md21}{}\doxysubsection{\texorpdfstring{1. Cargar el Firmware en el ESP32-\/\+S3}{1. Cargar el Firmware en el ESP32-\/\+S3}}\label{md__r_e_a_d_m_e_autotoc_md21}
+
+\begin{DoxyEnumerate}
+\item Abre esta carpeta en VS Code con Platform\+IO.
+\item Verifica el puerto COM asignado en {\ttfamily platformio.\+ini} (por defecto {\ttfamily COM17}): 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{upload\_port\ =\ COM17}
+\DoxyCodeLine{monitor\_port\ =\ COM17}
+
+\end{DoxyCode}
+
+\item Compila y flashea el proyecto: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pio\ run\ -\/-\/target\ upload}
+
+\end{DoxyCode}
+
+\item Abre el monitor serie para interactuar con la consola: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pio\ device\ monitor}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md22}{}\doxysubsection{\texorpdfstring{2. Configurar la Pantalla en el RP2040}{2. Configurar la Pantalla en el RP2040}}\label{md__r_e_a_d_m_e_autotoc_md22}
+
+\begin{DoxyEnumerate}
+\item Conecta la Raspberry Pi Pico manteniendo pulsado el botón {\bfseries{BOOTSEL}} y carga el firmware de Micro\+Python.
+\item Abre Thonny y selecciona el intérprete {\bfseries{Micro\+Python (Raspberry Pi Pico)}}.
+\item Copia a la raíz de la placa los archivos ubicados en {\ttfamily src/\+\+Display/}:
+\begin{DoxyItemize}
+\item {\ttfamily ili9341.\+py}
+\item {\ttfamily icons.\+py}
+\item {\ttfamily main.\+py}
+\end{DoxyItemize}
+\item Reinicia la placa o ejecuta {\ttfamily main.\+py}.
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md24}{}\doxysection{\texorpdfstring{👥 Autores y Colaboradores}{👥 Autores y Colaboradores}}\label{md__r_e_a_d_m_e_autotoc_md24}
+
+\begin{DoxyItemize}
+\item {\bfseries{Alejo\+Zapata}} -\/ \href{https://github.com/AlejoZapata}{\texttt{Git\+Hub Profile}}
+\item Proyecto desarrollado como solución de control e instrumentación ambiental IoT. 
+\end{DoxyItemize}

@@ -1,0 +1,73 @@
+\doxysection{src/\+dht11.h File Reference}
+\hypertarget{dht11_8h}{}\label{dht11_8h}\index{src/dht11.h@{src/dht11.h}}
+
+
+Interfaz para inicializar y leer un sensor de temperatura y humedad DHT11.  
+
+
+{\ttfamily \+\#include $<$stdint.\+h$>$}\newline
+{\ttfamily \+\#include "{}esp\+\_\+err.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structdht11__data__t}{dht11\+\_\+data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Lecturas de temperatura y humedad proporcionadas por el DHT11. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{dht11_8h_a79f439fe988171d2b9c7314a161bc156}{dht11\+\_\+init}} (int gpio\+\_\+pin)
+\begin{DoxyCompactList}\small\item\em Prepara el GPIO para comunicarse con el sensor DHT11. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{dht11_8h_a742737f0af5644f3f31925930b09eee4}{dht11\+\_\+read}} (int gpio\+\_\+pin, \doxymbox{\hyperlink{structdht11__data__t}{dht11\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}out)
+\begin{DoxyCompactList}\small\item\em Solicita y obtiene una muestra del sensor DHT11. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interfaz para inicializar y leer un sensor de temperatura y humedad DHT11. 
+
+
+
+\label{dht11_8h_doc-func-members}
+\Hypertarget{dht11_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{dht11_8h_a79f439fe988171d2b9c7314a161bc156}\index{dht11.h@{dht11.h}!dht11\_init@{dht11\_init}}
+\index{dht11\_init@{dht11\_init}!dht11.h@{dht11.h}}
+\doxysubsubsection{\texorpdfstring{dht11\_init()}{dht11\_init()}}
+{\footnotesize\ttfamily \label{dht11_8h_a79f439fe988171d2b9c7314a161bc156} 
+esp\+\_\+err\+\_\+t dht11\+\_\+init (\begin{DoxyParamCaption}\item[{int}]{gpio\+\_\+pin}{}\end{DoxyParamCaption})}
+
+
+
+Prepara el GPIO para comunicarse con el sensor DHT11. 
+
+Configura el pin como salida con nivel alto y habilita el pull-\/up interno. Debe llamarse antes de \doxylink{dht11_8h_a742737f0af5644f3f31925930b09eee4}{dht11\+\_\+read()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gpio\+\_\+pin} & GPIO conectado a la linea de datos del sensor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK al completar la configuracion. 
+\end{DoxyReturn}
+\Hypertarget{dht11_8h_a742737f0af5644f3f31925930b09eee4}\index{dht11.h@{dht11.h}!dht11\_read@{dht11\_read}}
+\index{dht11\_read@{dht11\_read}!dht11.h@{dht11.h}}
+\doxysubsubsection{\texorpdfstring{dht11\_read()}{dht11\_read()}}
+{\footnotesize\ttfamily \label{dht11_8h_a742737f0af5644f3f31925930b09eee4} 
+esp\+\_\+err\+\_\+t dht11\+\_\+read (\begin{DoxyParamCaption}\item[{int}]{gpio\+\_\+pin}{, }\item[{\doxymbox{\hyperlink{structdht11__data__t}{dht11\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out}{}\end{DoxyParamCaption})}
+
+
+
+Solicita y obtiene una muestra del sensor DHT11. 
+
+La funcion bloquea mientras genera la senal de inicio y mide la respuesta. La muestra solo se copia a {\ttfamily out} si la comunicacion y el checksum son validos.
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em gpio\+\_\+pin} & GPIO conectado a la linea de datos del sensor. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em out} & Estructura donde se guardaran temperatura y humedad; no puede ser NULL. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si la muestra es valida, ESP\+\_\+\+ERR\+\_\+\+TIMEOUT si no se recibe una transicion esperada, o ESP\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+CRC si falla el checksum. 
+\end{DoxyReturn}

@@ -19,7 +19,7 @@ Sistema de control para ESP32-\/\+S3 usando ESP-\/\+IDF y Free\+RTOS.
 {\ttfamily \+\#include "{}esp\+\_\+adc/\+adc\+\_\+oneshot.\+h"{}}\newline
 {\ttfamily \+\#include "{}esp\+\_\+adc/\+adc\+\_\+cali.\+h"{}}\newline
 {\ttfamily \+\#include "{}esp\+\_\+adc/\+adc\+\_\+cali\+\_\+scheme.\+h"{}}\newline
-\doxysubsubsection*{Data Structures}
+\doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \doxymbox{\hyperlink{structrelay__command__t}{relay\+\_\+command\+\_\+t}}
@@ -27,13 +27,17 @@ struct \doxymbox{\hyperlink{structrelay__command__t}{relay\+\_\+command\+\_\+t}}
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\+\#define \doxymbox{\hyperlink{main_8c_afc3d101f633a076cc1ca84b85b6224b2}{TAG}}~"{}CONTROL"{}
+\Hypertarget{main_8c_afc3d101f633a076cc1ca84b85b6224b2}\label{main_8c_afc3d101f633a076cc1ca84b85b6224b2} 
+\+\#define {\bfseries TAG}~"{}CONTROL"{}
 \begin{DoxyCompactList}\small\item\em Tag principal para los mensajes de registro (ESP\+\_\+\+LOG). \end{DoxyCompactList}\item 
-\+\#define \doxymbox{\hyperlink{main_8c_ada6adef0b1e97045b188882dcb147776}{NUM\+\_\+\+RELAYS}}~5
+\Hypertarget{main_8c_ada6adef0b1e97045b188882dcb147776}\label{main_8c_ada6adef0b1e97045b188882dcb147776} 
+\+\#define {\bfseries NUM\+\_\+\+RELAYS}~5
 \begin{DoxyCompactList}\small\item\em Cantidad total de relés en el sistema. \end{DoxyCompactList}\item 
-\+\#define \doxymbox{\hyperlink{main_8c_aca539d0f1df37b8d20b9573d660c5d77}{RELAY\+\_\+\+ON}}~0
+\Hypertarget{main_8c_aca539d0f1df37b8d20b9573d660c5d77}\label{main_8c_aca539d0f1df37b8d20b9573d660c5d77} 
+\+\#define {\bfseries RELAY\+\_\+\+ON}~0
 \begin{DoxyCompactList}\small\item\em Estado lógico para activar relés (Activo en LOW). \end{DoxyCompactList}\item 
-\+\#define \doxymbox{\hyperlink{main_8c_ac06e6d67b5a210db4d1005598d120bc5}{RELAY\+\_\+\+OFF}}~1
+\Hypertarget{main_8c_ac06e6d67b5a210db4d1005598d120bc5}\label{main_8c_ac06e6d67b5a210db4d1005598d120bc5} 
+\+\#define {\bfseries RELAY\+\_\+\+OFF}~1
 \begin{DoxyCompactList}\small\item\em Estado lógico para desactivar relés. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \begin{Indent}\textbf{ Pines GPIO para Relés}\par
 \begin{DoxyCompactItemize}
@@ -138,17 +142,7 @@ GPIO del sensor LM35 \#1 \Hypertarget{main_8c_a6a02116f12435abe86403aacb7a0d8f5}
 {\footnotesize\ttfamily \label{main_8c_a6a02116f12435abe86403aacb7a0d8f5} 
 \+\#define LM35\+\_\+\+INTERVAL\+\_\+\+MS~1000}
 
-Intervalo de lectura en ms \Hypertarget{main_8c_ada6adef0b1e97045b188882dcb147776}\index{main.c@{main.c}!NUM\_RELAYS@{NUM\_RELAYS}}
-\index{NUM\_RELAYS@{NUM\_RELAYS}!main.c@{main.c}}
-\doxysubsubsection{\texorpdfstring{NUM\_RELAYS}{NUM\_RELAYS}}
-{\footnotesize\ttfamily \label{main_8c_ada6adef0b1e97045b188882dcb147776} 
-\+\#define NUM\+\_\+\+RELAYS~5}
-
-
-
-Cantidad total de relés en el sistema. 
-
-\Hypertarget{main_8c_ad1dd70b3e8c189901e13ecad2b85d68b}\index{main.c@{main.c}!RELAY\_1\_GPIO@{RELAY\_1\_GPIO}}
+Intervalo de lectura en ms \Hypertarget{main_8c_ad1dd70b3e8c189901e13ecad2b85d68b}\index{main.c@{main.c}!RELAY\_1\_GPIO@{RELAY\_1\_GPIO}}
 \index{RELAY\_1\_GPIO@{RELAY\_1\_GPIO}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{RELAY\_1\_GPIO}{RELAY\_1\_GPIO}}
 {\footnotesize\ttfamily \label{main_8c_ad1dd70b3e8c189901e13ecad2b85d68b} 
@@ -178,37 +172,7 @@ GPIO del Relé 4 \Hypertarget{main_8c_a321f91390343cb54814c367ba1fd7115}\index{m
 {\footnotesize\ttfamily \label{main_8c_a321f91390343cb54814c367ba1fd7115} 
 \+\#define RELAY\+\_\+5\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+39}
 
-GPIO del Relé 5 \Hypertarget{main_8c_ac06e6d67b5a210db4d1005598d120bc5}\index{main.c@{main.c}!RELAY\_OFF@{RELAY\_OFF}}
-\index{RELAY\_OFF@{RELAY\_OFF}!main.c@{main.c}}
-\doxysubsubsection{\texorpdfstring{RELAY\_OFF}{RELAY\_OFF}}
-{\footnotesize\ttfamily \label{main_8c_ac06e6d67b5a210db4d1005598d120bc5} 
-\+\#define RELAY\+\_\+\+OFF~1}
-
-
-
-Estado lógico para desactivar relés. 
-
-\Hypertarget{main_8c_aca539d0f1df37b8d20b9573d660c5d77}\index{main.c@{main.c}!RELAY\_ON@{RELAY\_ON}}
-\index{RELAY\_ON@{RELAY\_ON}!main.c@{main.c}}
-\doxysubsubsection{\texorpdfstring{RELAY\_ON}{RELAY\_ON}}
-{\footnotesize\ttfamily \label{main_8c_aca539d0f1df37b8d20b9573d660c5d77} 
-\+\#define RELAY\+\_\+\+ON~0}
-
-
-
-Estado lógico para activar relés (Activo en LOW). 
-
-\Hypertarget{main_8c_afc3d101f633a076cc1ca84b85b6224b2}\index{main.c@{main.c}!TAG@{TAG}}
-\index{TAG@{TAG}!main.c@{main.c}}
-\doxysubsubsection{\texorpdfstring{TAG}{TAG}}
-{\footnotesize\ttfamily \label{main_8c_afc3d101f633a076cc1ca84b85b6224b2} 
-\+\#define TAG~"{}CONTROL"{}}
-
-
-
-Tag principal para los mensajes de registro (ESP\+\_\+\+LOG). 
-
-
+GPIO del Relé 5 
 
 \label{main_8c_doc-func-members}
 \Hypertarget{main_8c_doc-func-members}

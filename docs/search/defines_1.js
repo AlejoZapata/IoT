@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['lm35_5f2_5fadc_5fchannel_0',['LM35_2_ADC_CHANNEL',['../main_8c.html#a7f824dfc3d0a1cfba8c88a6c99e2d654',1,'main.c']]],
-  ['lm35_5f2_5fgpio_1',['LM35_2_GPIO',['../main_8c.html#a2a9d58ec4d298214eb915ea45a2f04cd',1,'main.c']]],
-  ['lm35_5fadc_5fchannel_2',['LM35_ADC_CHANNEL',['../main_8c.html#a015755b2ed03a252ae40cc7aa2d3db6c',1,'main.c']]],
-  ['lm35_5fgpio_3',['LM35_GPIO',['../main_8c.html#a5cba686e34f38a1dcc62010b789b2dec',1,'main.c']]],
-  ['lm35_5finterval_5fms_4',['LM35_INTERVAL_MS',['../main_8c.html#a6a02116f12435abe86403aacb7a0d8f5',1,'main.c']]]
+  ['i2c_5fmaster_5ffreq_5fhz_0',['I2C_MASTER_FREQ_HZ',['../ds1307_8c.html#a5c22ca4de37a83a59014e48b0a0b043d',1,'ds1307.c']]],
+  ['i2c_5fmaster_5fnum_1',['I2C_MASTER_NUM',['../ds1307_8c.html#aab9e642b6200f95fcbd2ad7466aaa2d3',1,'ds1307.c']]],
+  ['i2c_5fmaster_5fscl_5fio_2',['I2C_MASTER_SCL_IO',['../ds1307_8c.html#a033b5e8a30541fe4ff939a62fdb7a43d',1,'ds1307.c']]],
+  ['i2c_5fmaster_5fsda_5fio_3',['I2C_MASTER_SDA_IO',['../ds1307_8c.html#af47631d568bba17edf9d1ea042602bb6',1,'ds1307.c']]]
 ];
