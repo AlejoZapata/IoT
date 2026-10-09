@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['👥_20autores_20y_20colaboradores_0',['👥 Autores y Colaboradores',['../md__r_e_a_d_m_e.html#autotoc_md24',1,'']]]
+  ['o_20punto_20y_20coma_20_3a_0',['B. Múltiples comandos en una sola línea (separados por coma o punto y coma):',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md35',1,'']]]
 ];

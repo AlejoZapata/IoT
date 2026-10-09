@@ -1,0 +1,190 @@
+\doxysection{src/\+main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{src/main.c@{src/main.c}}
+
+
+Sistema de control para ESP32-\/\+S3 usando ESP-\/\+IDF y Free\+RTOS.  
+
+
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \+\#include "{}freertos/\+\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+task.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+queue.\+h"{}}\newline
+{\ttfamily \+\#include "{}driver/\+gpio.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+log.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+err.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+rom\+\_\+sys.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+adc/\+adc\+\_\+oneshot.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+adc/\+adc\+\_\+cali.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+adc/\+adc\+\_\+cali\+\_\+scheme.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structrelay__command__t}{relay\+\_\+command\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Estructura enviada a la cola de Free\+RTOS para conmutar un relé. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8c_afc3d101f633a076cc1ca84b85b6224b2}\label{main_8c_afc3d101f633a076cc1ca84b85b6224b2} 
+\+\#define {\bfseries TAG}~"{}CONTROL"{}
+\begin{DoxyCompactList}\small\item\em Tag principal para los mensajes de registro (ESP\+\_\+\+LOG). \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_ada6adef0b1e97045b188882dcb147776}\label{main_8c_ada6adef0b1e97045b188882dcb147776} 
+\+\#define {\bfseries NUM\+\_\+\+RELAYS}~5
+\begin{DoxyCompactList}\small\item\em Cantidad total de relés en el sistema. \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_aca539d0f1df37b8d20b9573d660c5d77}\label{main_8c_aca539d0f1df37b8d20b9573d660c5d77} 
+\+\#define {\bfseries RELAY\+\_\+\+ON}~0
+\begin{DoxyCompactList}\small\item\em Estado lógico para activar relés (Activo en LOW). \end{DoxyCompactList}\item 
+\Hypertarget{main_8c_ac06e6d67b5a210db4d1005598d120bc5}\label{main_8c_ac06e6d67b5a210db4d1005598d120bc5} 
+\+\#define {\bfseries RELAY\+\_\+\+OFF}~1
+\begin{DoxyCompactList}\small\item\em Estado lógico para desactivar relés. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Pines GPIO para Relés}\par
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_ad1dd70b3e8c189901e13ecad2b85d68b}{RELAY\+\_\+1\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+35
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a4568eaf981415063f5ab0dba7e3971d9}{RELAY\+\_\+2\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+36
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_ab14b1c2830fe670c95053dff5d7b2ccb}{RELAY\+\_\+3\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+37
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_afda2f9f46c39e34548281f8d4a3ac665}{RELAY\+\_\+4\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+38
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a321f91390343cb54814c367ba1fd7115}{RELAY\+\_\+5\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+39
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Configuración Sensor LM35 \#1}\par
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a5cba686e34f38a1dcc62010b789b2dec}{LM35\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+9
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a015755b2ed03a252ae40cc7aa2d3db6c}{LM35\+\_\+\+ADC\+\_\+\+CHANNEL}}~ADC\+\_\+\+CHANNEL\+\_\+8
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a6a02116f12435abe86403aacb7a0d8f5}{LM35\+\_\+\+INTERVAL\+\_\+\+MS}}~1000
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Configuración Sensor LM35 \#2}\par
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a2a9d58ec4d298214eb915ea45a2f04cd}{LM35\+\_\+2\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+11
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a7f824dfc3d0a1cfba8c88a6c99e2d654}{LM35\+\_\+2\+\_\+\+ADC\+\_\+\+CHANNEL}}~ADC\+\_\+\+CHANNEL\+\_\+0
+\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Configuración Sensor DHT11}\par
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a88f236ffcdba286592667c799ddd69fd}{DHT11\+\_\+\+GPIO}}~GPIO\+\_\+\+NUM\+\_\+40
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_ab420418730017c63ed5138fbd1733b82}{DHT11\+\_\+\+INTERVAL\+\_\+\+MS}}~2000
+\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{main_8c_a630544a7f0a2cc40d8a7fefab7e2fe70}{app\+\_\+main}} (void)
+\begin{DoxyCompactList}\small\item\em Función de entrada principal de la aplicación. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Sistema de control para ESP32-\/\+S3 usando ESP-\/\+IDF y Free\+RTOS. 
+
+Este archivo gestiona la lectura de múltiples sensores de temperatura (dos LM35 vía ADC y un DHT11) y el control de 5 relés por medio de comandos enviados por consola serial. \begin{DoxyAuthor}{Author}
+Alejandro zapata -\/ Miguel alvarez -\/ Thomas Ciro / Proyecto 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2026-\/10-\/04 
+\end{DoxyDate}
+
+
+\label{main_8c_doc-define-members}
+\Hypertarget{main_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{main_8c_a88f236ffcdba286592667c799ddd69fd}\index{main.c@{main.c}!DHT11\_GPIO@{DHT11\_GPIO}}
+\index{DHT11\_GPIO@{DHT11\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{DHT11\_GPIO}{DHT11\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_a88f236ffcdba286592667c799ddd69fd} 
+\+\#define DHT11\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+40}
+
+GPIO de datos para el DHT11 \Hypertarget{main_8c_ab420418730017c63ed5138fbd1733b82}\index{main.c@{main.c}!DHT11\_INTERVAL\_MS@{DHT11\_INTERVAL\_MS}}
+\index{DHT11\_INTERVAL\_MS@{DHT11\_INTERVAL\_MS}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{DHT11\_INTERVAL\_MS}{DHT11\_INTERVAL\_MS}}
+{\footnotesize\ttfamily \label{main_8c_ab420418730017c63ed5138fbd1733b82} 
+\+\#define DHT11\+\_\+\+INTERVAL\+\_\+\+MS~2000}
+
+Intervalo de lectura recomendado (2s) \Hypertarget{main_8c_a7f824dfc3d0a1cfba8c88a6c99e2d654}\index{main.c@{main.c}!LM35\_2\_ADC\_CHANNEL@{LM35\_2\_ADC\_CHANNEL}}
+\index{LM35\_2\_ADC\_CHANNEL@{LM35\_2\_ADC\_CHANNEL}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{LM35\_2\_ADC\_CHANNEL}{LM35\_2\_ADC\_CHANNEL}}
+{\footnotesize\ttfamily \label{main_8c_a7f824dfc3d0a1cfba8c88a6c99e2d654} 
+\+\#define LM35\+\_\+2\+\_\+\+ADC\+\_\+\+CHANNEL~ADC\+\_\+\+CHANNEL\+\_\+0}
+
+Canal ADC2 asignado al LM35 \#2 \Hypertarget{main_8c_a2a9d58ec4d298214eb915ea45a2f04cd}\index{main.c@{main.c}!LM35\_2\_GPIO@{LM35\_2\_GPIO}}
+\index{LM35\_2\_GPIO@{LM35\_2\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{LM35\_2\_GPIO}{LM35\_2\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_a2a9d58ec4d298214eb915ea45a2f04cd} 
+\+\#define LM35\+\_\+2\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+11}
+
+GPIO del sensor LM35 \#2 (ESP32-\/\+S3) \Hypertarget{main_8c_a015755b2ed03a252ae40cc7aa2d3db6c}\index{main.c@{main.c}!LM35\_ADC\_CHANNEL@{LM35\_ADC\_CHANNEL}}
+\index{LM35\_ADC\_CHANNEL@{LM35\_ADC\_CHANNEL}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{LM35\_ADC\_CHANNEL}{LM35\_ADC\_CHANNEL}}
+{\footnotesize\ttfamily \label{main_8c_a015755b2ed03a252ae40cc7aa2d3db6c} 
+\+\#define LM35\+\_\+\+ADC\+\_\+\+CHANNEL~ADC\+\_\+\+CHANNEL\+\_\+8}
+
+Canal ADC1 asignado al LM35 \#1 \Hypertarget{main_8c_a5cba686e34f38a1dcc62010b789b2dec}\index{main.c@{main.c}!LM35\_GPIO@{LM35\_GPIO}}
+\index{LM35\_GPIO@{LM35\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{LM35\_GPIO}{LM35\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_a5cba686e34f38a1dcc62010b789b2dec} 
+\+\#define LM35\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+9}
+
+GPIO del sensor LM35 \#1 \Hypertarget{main_8c_a6a02116f12435abe86403aacb7a0d8f5}\index{main.c@{main.c}!LM35\_INTERVAL\_MS@{LM35\_INTERVAL\_MS}}
+\index{LM35\_INTERVAL\_MS@{LM35\_INTERVAL\_MS}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{LM35\_INTERVAL\_MS}{LM35\_INTERVAL\_MS}}
+{\footnotesize\ttfamily \label{main_8c_a6a02116f12435abe86403aacb7a0d8f5} 
+\+\#define LM35\+\_\+\+INTERVAL\+\_\+\+MS~1000}
+
+Intervalo de lectura en ms \Hypertarget{main_8c_ad1dd70b3e8c189901e13ecad2b85d68b}\index{main.c@{main.c}!RELAY\_1\_GPIO@{RELAY\_1\_GPIO}}
+\index{RELAY\_1\_GPIO@{RELAY\_1\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{RELAY\_1\_GPIO}{RELAY\_1\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_ad1dd70b3e8c189901e13ecad2b85d68b} 
+\+\#define RELAY\+\_\+1\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+35}
+
+GPIO del Relé 1 \Hypertarget{main_8c_a4568eaf981415063f5ab0dba7e3971d9}\index{main.c@{main.c}!RELAY\_2\_GPIO@{RELAY\_2\_GPIO}}
+\index{RELAY\_2\_GPIO@{RELAY\_2\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{RELAY\_2\_GPIO}{RELAY\_2\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_a4568eaf981415063f5ab0dba7e3971d9} 
+\+\#define RELAY\+\_\+2\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+36}
+
+GPIO del Relé 2 \Hypertarget{main_8c_ab14b1c2830fe670c95053dff5d7b2ccb}\index{main.c@{main.c}!RELAY\_3\_GPIO@{RELAY\_3\_GPIO}}
+\index{RELAY\_3\_GPIO@{RELAY\_3\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{RELAY\_3\_GPIO}{RELAY\_3\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_ab14b1c2830fe670c95053dff5d7b2ccb} 
+\+\#define RELAY\+\_\+3\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+37}
+
+GPIO del Relé 3 \Hypertarget{main_8c_afda2f9f46c39e34548281f8d4a3ac665}\index{main.c@{main.c}!RELAY\_4\_GPIO@{RELAY\_4\_GPIO}}
+\index{RELAY\_4\_GPIO@{RELAY\_4\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{RELAY\_4\_GPIO}{RELAY\_4\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_afda2f9f46c39e34548281f8d4a3ac665} 
+\+\#define RELAY\+\_\+4\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+38}
+
+GPIO del Relé 4 \Hypertarget{main_8c_a321f91390343cb54814c367ba1fd7115}\index{main.c@{main.c}!RELAY\_5\_GPIO@{RELAY\_5\_GPIO}}
+\index{RELAY\_5\_GPIO@{RELAY\_5\_GPIO}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{RELAY\_5\_GPIO}{RELAY\_5\_GPIO}}
+{\footnotesize\ttfamily \label{main_8c_a321f91390343cb54814c367ba1fd7115} 
+\+\#define RELAY\+\_\+5\+\_\+\+GPIO~GPIO\+\_\+\+NUM\+\_\+39}
+
+GPIO del Relé 5 
+
+\label{main_8c_doc-func-members}
+\Hypertarget{main_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a630544a7f0a2cc40d8a7fefab7e2fe70}\index{main.c@{main.c}!app\_main@{app\_main}}
+\index{app\_main@{app\_main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{app\_main()}{app\_main()}}
+{\footnotesize\ttfamily \label{main_8c_a630544a7f0a2cc40d8a7fefab7e2fe70} 
+void app\+\_\+main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Función de entrada principal de la aplicación. 
+
+Inicializa los periféricos, crea la cola Free\+RTOS y arranca las 4 tareas concurrentes (relés, puerto serie, LM35 y DHT11). 

@@ -1,3 +1,11 @@
+/**
+ * @file hcsr04.c
+ * @brief Implementacion de la medicion de distancia por tiempo de vuelo.
+ *
+ * El tiempo de espera maximo para cada flanco de ECHO es de 25 ms, lo que
+ * limita el alcance practico de la medicion a aproximadamente 4 metros.
+ */
+
 #include "hcsr04.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
@@ -6,7 +14,9 @@
 #include "freertos/task.h"
 
 
+/** Etiqueta usada en los mensajes de registro del modulo. */
 #define TAG "HCSR04"
+/** Tiempo limite para detectar cada flanco de ECHO, en microsegundos. */
 #define TIMEOUT_US 25000 // 25ms → ~4 metros máximo
 
 esp_err_t hcsr04_init(const hcsr04_config_t *cfg) {

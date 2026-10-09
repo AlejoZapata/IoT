@@ -1,5 +1,28 @@
 var searchData=
 [
-  ['la_20pantalla_20en_20el_20rp2040_0',['2. Configurar la Pantalla en el RP2040',['../md__r_e_a_d_m_e.html#autotoc_md22',1,'']]],
-  ['las_209_20variables_20monitoreadas_1',['📊 Las 9 Variables Monitoreadas',['../md__r_e_a_d_m_e.html#autotoc_md11',1,'']]]
+  ['c_20alias_20reconocidos_20automáticamente_3a_0',['C. Alias reconocidos automáticamente:',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md36',1,'']]],
+  ['características_20principales_1',['🚀 Características Principales',['../md__r_e_a_d_m_e.html#autotoc_md4',1,'']]],
+  ['cargar_20el_20firmware_20en_20el_20esp32_20s3_2',['1. Cargar el Firmware en el ESP32-S3',['../md__r_e_a_d_m_e.html#autotoc_md21',1,'']]],
+  ['clear_5fram_3',['clear_ram',['../classili9341_1_1_i_l_i9341.html#ab1e778926946be9033176b67bbdc553e',1,'ili9341::ILI9341']]],
+  ['cli_4',['💻 Consola Serial Interactiva (CLI)',['../md__r_e_a_d_m_e.html#autotoc_md13',1,'']]],
+  ['colaboradores_5',['👥 Autores y Colaboradores',['../md__r_e_a_d_m_e.html#autotoc_md24',1,'']]],
+  ['coma_20_3a_6',['B. Múltiples comandos en una sola línea (separados por coma o punto y coma):',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md35',1,'']]],
+  ['coma_20o_20punto_20y_20coma_20_3a_7',['B. Múltiples comandos en una sola línea (separados por coma o punto y coma):',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md35',1,'']]],
+  ['comandos_20de_20ajuste_20de_20consignas_3a_8',['Comandos de Ajuste de Consignas:',['../md__r_e_a_d_m_e.html#autotoc_md14',1,'']]],
+  ['comandos_20de_20diagnóstico_20y_20control_3a_9',['Comandos de Diagnóstico y Control:',['../md__r_e_a_d_m_e.html#autotoc_md15',1,'']]],
+  ['comandos_20en_20una_20sola_20línea_20separados_20por_20coma_20o_20punto_20y_20coma_20_3a_10',['B. Múltiples comandos en una sola línea (separados por coma o punto y coma):',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md35',1,'']]],
+  ['comandos_20individuales_20uno_20por_20línea_20_3a_11',['A. Comandos individuales (uno por línea):',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md34',1,'']]],
+  ['comandos_20uart_20pin_20físico_202_12',['3. Protocolo de Comandos UART (Pin Físico 2)',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md31',1,'']]],
+  ['comands_13',['Comands',['../md_src_2_comands.html',1,'']]],
+  ['compilación_14',['🛠️ Instalación y Compilación',['../md__r_e_a_d_m_e.html#autotoc_md19',1,'']]],
+  ['comportamiento_20visual_15',['2. Las 9 Variables y su Comportamiento Visual',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md29',1,'']]],
+  ['con_20rp2040_16',['Sistema de Monitoreo de 9 Variables en Pantalla TFT ILI9341 con RP2040',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md25',1,'']]],
+  ['con_20thonny_17',['5. Puesta en Marcha Rápida con Thonny',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md40',1,'']]],
+  ['conexiones_20pines_20físicos_20vs_20gpio_18',['1. Tabla de Conexiones (Pines Físicos vs GPIO)',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md27',1,'']]],
+  ['configurar_20la_20pantalla_20en_20el_20rp2040_19',['2. Configurar la Pantalla en el RP2040',['../md__r_e_a_d_m_e.html#autotoc_md22',1,'']]],
+  ['consignas_3a_20',['Comandos de Ajuste de Consignas:',['../md__r_e_a_d_m_e.html#autotoc_md14',1,'']]],
+  ['consola_20serial_20interactiva_20cli_21',['💻 Consola Serial Interactiva (CLI)',['../md__r_e_a_d_m_e.html#autotoc_md13',1,'']]],
+  ['control_20ambiental_20inteligente_20y_20monitoreo_20iot_22',['Sistema de Control Ambiental Inteligente y Monitoreo IoT',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['control_3a_23',['Comandos de Diagnóstico y Control:',['../md__r_e_a_d_m_e.html#autotoc_md15',1,'']]],
+  ['controlador_20principal_24',['1. ESP32-S3 (Controlador Principal)',['../md__r_e_a_d_m_e.html#autotoc_md7',1,'']]]
 ];

@@ -1,0 +1,89 @@
+\doxysection{src/\+dht11.c File Reference}
+\hypertarget{dht11_8c}{}\label{dht11_8c}\index{src/dht11.c@{src/dht11.c}}
+
+
+Implementacion de la comunicacion temporizada con el sensor DHT11.  
+
+
+{\ttfamily \+\#include "{}dht11.\+h"{}}\newline
+{\ttfamily \+\#include "{}driver/\+gpio.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+timer.\+h"{}}\newline
+{\ttfamily \+\#include "{}rom/\+ets\+\_\+sys.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+log.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+task.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{dht11_8c_afc3d101f633a076cc1ca84b85b6224b2}{TAG}}~"{}DHT11"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{dht11_8c_a79f439fe988171d2b9c7314a161bc156}{dht11\+\_\+init}} (int gpio\+\_\+pin)
+\begin{DoxyCompactList}\small\item\em Prepara el GPIO para comunicarse con el sensor DHT11. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{dht11_8c_a742737f0af5644f3f31925930b09eee4}{dht11\+\_\+read}} (int gpio\+\_\+pin, \doxymbox{\hyperlink{structdht11__data__t}{dht11\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}out)
+\begin{DoxyCompactList}\small\item\em Solicita y obtiene una muestra del sensor DHT11. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementacion de la comunicacion temporizada con el sensor DHT11. 
+
+El protocolo se muestrea mediante espera activa y una seccion critica para reducir variaciones de temporizacion durante la recepcion de los 40 bits. 
+
+\label{dht11_8c_doc-define-members}
+\Hypertarget{dht11_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{dht11_8c_afc3d101f633a076cc1ca84b85b6224b2}\index{dht11.c@{dht11.c}!TAG@{TAG}}
+\index{TAG@{TAG}!dht11.c@{dht11.c}}
+\doxysubsubsection{\texorpdfstring{TAG}{TAG}}
+{\footnotesize\ttfamily \label{dht11_8c_afc3d101f633a076cc1ca84b85b6224b2} 
+\+\#define TAG~"{}DHT11"{}}
+
+Etiqueta usada en los mensajes de registro del modulo. 
+
+\label{dht11_8c_doc-func-members}
+\Hypertarget{dht11_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{dht11_8c_a79f439fe988171d2b9c7314a161bc156}\index{dht11.c@{dht11.c}!dht11\_init@{dht11\_init}}
+\index{dht11\_init@{dht11\_init}!dht11.c@{dht11.c}}
+\doxysubsubsection{\texorpdfstring{dht11\_init()}{dht11\_init()}}
+{\footnotesize\ttfamily \label{dht11_8c_a79f439fe988171d2b9c7314a161bc156} 
+esp\+\_\+err\+\_\+t dht11\+\_\+init (\begin{DoxyParamCaption}\item[{int}]{gpio\+\_\+pin}{}\end{DoxyParamCaption})}
+
+
+
+Prepara el GPIO para comunicarse con el sensor DHT11. 
+
+Configura el pin como salida con nivel alto y habilita el pull-\/up interno. Debe llamarse antes de \doxylink{dht11_8h_a742737f0af5644f3f31925930b09eee4}{dht11\+\_\+read()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em gpio\+\_\+pin} & GPIO conectado a la linea de datos del sensor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK al completar la configuracion. 
+\end{DoxyReturn}
+\Hypertarget{dht11_8c_a742737f0af5644f3f31925930b09eee4}\index{dht11.c@{dht11.c}!dht11\_read@{dht11\_read}}
+\index{dht11\_read@{dht11\_read}!dht11.c@{dht11.c}}
+\doxysubsubsection{\texorpdfstring{dht11\_read()}{dht11\_read()}}
+{\footnotesize\ttfamily \label{dht11_8c_a742737f0af5644f3f31925930b09eee4} 
+esp\+\_\+err\+\_\+t dht11\+\_\+read (\begin{DoxyParamCaption}\item[{int}]{gpio\+\_\+pin}{, }\item[{\doxymbox{\hyperlink{structdht11__data__t}{dht11\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{out}{}\end{DoxyParamCaption})}
+
+
+
+Solicita y obtiene una muestra del sensor DHT11. 
+
+La funcion bloquea mientras genera la senal de inicio y mide la respuesta. La muestra solo se copia a {\ttfamily out} si la comunicacion y el checksum son validos.
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em gpio\+\_\+pin} & GPIO conectado a la linea de datos del sensor. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em out} & Estructura donde se guardaran temperatura y humedad; no puede ser NULL. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si la muestra es valida, ESP\+\_\+\+ERR\+\_\+\+TIMEOUT si no se recibe una transicion esperada, o ESP\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+CRC si falla el checksum. 
+\end{DoxyReturn}

@@ -1,21 +1,36 @@
+/**
+ * @file ds1307.c
+ * @brief Acceso al DS1307 mediante I2C y conversion entre decimal y BCD.
+ *
+ * El modulo usa la direccion I2C 0x68 y configura el bus en GPIO 8 (SDA) y
+ * GPIO 9 (SCL), a 100 kHz.
+ */
+
 #include "ds1307.h"
 #include "driver/i2c.h"
 #include "esp_log.h"
 
+/** GPIO usado como reloj del bus I2C. */
 #define I2C_MASTER_SCL_IO 9
+/** GPIO usado como datos del bus I2C. */
 #define I2C_MASTER_SDA_IO 8
+/** Puerto I2C del DS1307. */
 #define I2C_MASTER_NUM I2C_NUM_0
+/** Frecuencia del bus I2C en hertz. */
 #define I2C_MASTER_FREQ_HZ 100000
 
+/** Direccion I2C de 7 bits del DS1307. */
 #define DS1307_ADDR 0x68
 
+/** Etiqueta usada en los mensajes de registro del modulo. */
 #define TAG "DS1307"
 
-// Funciones internas
+/** @brief Convierte un valor decimal de dos digitos a BCD. */
 static uint8_t dec_to_bcd(uint8_t val) {
   return ((val / 10) << 4) | (val % 10);
 }
 
+/** @brief Convierte un valor BCD empaquetado a decimal. */
 static uint8_t bcd_to_dec(uint8_t val) {
   return ((val >> 4) * 10) + (val & 0x0F);
 }

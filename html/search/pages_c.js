@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['repositorio_0',['📁 Estructura del Repositorio',['../md__r_e_a_d_m_e.html#autotoc_md17',1,'']]],
-  ['requisitos_1',['Requisitos',['../md__r_e_a_d_m_e.html#autotoc_md20',1,'']]],
-  ['rp2040_2',['2. Configurar la Pantalla en el RP2040',['../md__r_e_a_d_m_e.html#autotoc_md22',1,'']]],
-  ['rp2040_20pantalla_20tft_20ili9341_20micropython_3',['2. RP2040 (Pantalla TFT ILI9341 - MicroPython)',['../md__r_e_a_d_m_e.html#autotoc_md9',1,'']]]
+  ['físico_202_0',['3. Protocolo de Comandos UART (Pin Físico 2)',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md31',1,'']]],
+  ['físicos_20vs_20gpio_1',['1. Tabla de Conexiones (Pines Físicos vs GPIO)',['../dir_8b29354ea792f14f229ba6ab36888b3c.html#autotoc_md27',1,'']]],
+  ['firmware_20en_20el_20esp32_20s3_2',['1. Cargar el Firmware en el ESP32-S3',['../md__r_e_a_d_m_e.html#autotoc_md21',1,'']]]
 ];

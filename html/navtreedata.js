@@ -44,13 +44,31 @@ var NAVTREE =
         [ "2. Configurar la Pantalla en el RP2040", "md__r_e_a_d_m_e.html#autotoc_md22", null ]
       ] ],
       [ "👥 Autores y Colaboradores", "md__r_e_a_d_m_e.html#autotoc_md24", null ]
+    ] ],
+    [ "Comands", "md_src_2_comands.html", null ],
+    [ "Classes", "annotated.html", [
+      [ "Class List", "annotated.html", "annotated_dup" ],
+      [ "Class Index", "classes.html", null ],
+      [ "Class Members", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ]
+      ] ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ],
+        [ "Macros", "globals_defs.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+"annotated.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

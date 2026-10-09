@@ -1,0 +1,96 @@
+\doxysection{src/\+hcsr04.c File Reference}
+\hypertarget{hcsr04_8c}{}\label{hcsr04_8c}\index{src/hcsr04.c@{src/hcsr04.c}}
+
+
+Implementacion de la medicion de distancia por tiempo de vuelo.  
+
+
+{\ttfamily \+\#include "{}hcsr04.\+h"{}}\newline
+{\ttfamily \+\#include "{}driver/\+gpio.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+log.\+h"{}}\newline
+{\ttfamily \+\#include "{}esp\+\_\+timer.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \+\#include "{}freertos/\+task.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{hcsr04_8c_afc3d101f633a076cc1ca84b85b6224b2}{TAG}}~"{}HCSR04"{}
+\item 
+\+\#define \doxymbox{\hyperlink{hcsr04_8c_a9ee0c6cb22ce4ffbbc448115500c6edc}{TIMEOUT\+\_\+\+US}}~25000
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{hcsr04_8c_a4a47b9d438bfb74912ad56d2cc9d7c13}{hcsr04\+\_\+init}} (const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}cfg)
+\begin{DoxyCompactList}\small\item\em Configura los GPIO TRIG y ECHO del sensor. \end{DoxyCompactList}\item 
+esp\+\_\+err\+\_\+t \doxymbox{\hyperlink{hcsr04_8c_a23e12e43f6709c9d1a064d80e5005640}{hcsr04\+\_\+measure\+\_\+cm}} (const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}cfg, float \texorpdfstring{$\ast$}{*}out\+\_\+cm)
+\begin{DoxyCompactList}\small\item\em Mide la distancia al objeto mas cercano frente al sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementacion de la medicion de distancia por tiempo de vuelo. 
+
+El tiempo de espera maximo para cada flanco de ECHO es de 25 ms, lo que limita el alcance practico de la medicion a aproximadamente 4 metros. 
+
+\label{hcsr04_8c_doc-define-members}
+\Hypertarget{hcsr04_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{hcsr04_8c_afc3d101f633a076cc1ca84b85b6224b2}\index{hcsr04.c@{hcsr04.c}!TAG@{TAG}}
+\index{TAG@{TAG}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{TAG}{TAG}}
+{\footnotesize\ttfamily \label{hcsr04_8c_afc3d101f633a076cc1ca84b85b6224b2} 
+\+\#define TAG~"{}HCSR04"{}}
+
+Etiqueta usada en los mensajes de registro del modulo. \Hypertarget{hcsr04_8c_a9ee0c6cb22ce4ffbbc448115500c6edc}\index{hcsr04.c@{hcsr04.c}!TIMEOUT\_US@{TIMEOUT\_US}}
+\index{TIMEOUT\_US@{TIMEOUT\_US}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{TIMEOUT\_US}{TIMEOUT\_US}}
+{\footnotesize\ttfamily \label{hcsr04_8c_a9ee0c6cb22ce4ffbbc448115500c6edc} 
+\+\#define TIMEOUT\+\_\+\+US~25000}
+
+Tiempo limite para detectar cada flanco de ECHO, en microsegundos. 
+
+\label{hcsr04_8c_doc-func-members}
+\Hypertarget{hcsr04_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{hcsr04_8c_a4a47b9d438bfb74912ad56d2cc9d7c13}\index{hcsr04.c@{hcsr04.c}!hcsr04\_init@{hcsr04\_init}}
+\index{hcsr04\_init@{hcsr04\_init}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{hcsr04\_init()}{hcsr04\_init()}}
+{\footnotesize\ttfamily \label{hcsr04_8c_a4a47b9d438bfb74912ad56d2cc9d7c13} 
+esp\+\_\+err\+\_\+t hcsr04\+\_\+init (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cfg}{}\end{DoxyParamCaption})}
+
+
+
+Configura los GPIO TRIG y ECHO del sensor. 
+
+Inicializa TRIG como salida y ECHO como entrada. La configuracion debe completarse antes de llamar a \doxylink{hcsr04_8h_a23e12e43f6709c9d1a064d80e5005640}{hcsr04\+\_\+measure\+\_\+cm()}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em cfg} & Configuracion de los pines; no puede ser NULL. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si la configuracion termina. Un error al configurar GPIO se gestiona mediante ESP\+\_\+\+ERROR\+\_\+\+CHECK y provoca la terminacion por error. 
+\end{DoxyReturn}
+\Hypertarget{hcsr04_8c_a23e12e43f6709c9d1a064d80e5005640}\index{hcsr04.c@{hcsr04.c}!hcsr04\_measure\_cm@{hcsr04\_measure\_cm}}
+\index{hcsr04\_measure\_cm@{hcsr04\_measure\_cm}!hcsr04.c@{hcsr04.c}}
+\doxysubsubsection{\texorpdfstring{hcsr04\_measure\_cm()}{hcsr04\_measure\_cm()}}
+{\footnotesize\ttfamily \label{hcsr04_8c_a23e12e43f6709c9d1a064d80e5005640} 
+esp\+\_\+err\+\_\+t hcsr04\+\_\+measure\+\_\+cm (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{structhcsr04__config__t}{hcsr04\+\_\+config\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cfg}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{out\+\_\+cm}{}\end{DoxyParamCaption})}
+
+
+
+Mide la distancia al objeto mas cercano frente al sensor. 
+
+Emite un pulso de disparo y calcula la distancia a partir de la duracion del pulso ECHO, usando 0.\+034 cm/\+us para la velocidad del sonido.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxymbox{\texttt{in}}  & {\em cfg} & Configuracion de pines previamente inicializada; no puede ser NULL. \\
+\hline
+\doxymbox{\texttt{out}}  & {\em out\+\_\+cm} & Destino de la distancia en centimetros; no puede ser NULL. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ESP\+\_\+\+OK si se mide el pulso completo o ESP\+\_\+\+ERR\+\_\+\+TIMEOUT si no se detecta alguno de sus flancos dentro del tiempo limite. 
+\end{DoxyReturn}

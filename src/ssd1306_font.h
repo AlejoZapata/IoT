@@ -1,10 +1,20 @@
 #ifndef SSD1306_FONT_H
 #define SSD1306_FONT_H
 
+/**
+ * @file ssd1306_font.h
+ * @brief Fuente bitmap ASCII de 5x7 usada por el controlador SSD1306.
+ */
+
 #include <stdint.h>
 
-// Fuente ASCII 5x7 (con 1 columna de espaciado para 6x8 por caracter)
-// Caracteres del 32 (espacio) al 126 ('~')
+/**
+ * @brief Glifos ASCII imprimibles desde espacio (32) hasta tilde (126).
+ *
+ * Cada entrada contiene cinco columnas de bits; cada bit representa un pixel
+ * vertical. ssd1306_draw_char() anade una columna de separacion para formar
+ * celdas de 6x8 pixeles.
+ */
 static const uint8_t font5x7[][5] = {
     {0x00, 0x00, 0x00, 0x00, 0x00}, // 32 ' '
     {0x00, 0x00, 0x5F, 0x00, 0x00}, // 33 '!'

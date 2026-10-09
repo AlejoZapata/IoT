@@ -1,0 +1,128 @@
+\doxysection{src/\+\+Display Directory Reference}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c}{}\label{dir_8b29354ea792f14f229ba6ab36888b3c}\index{src/Display Directory Reference@{src/Display Directory Reference}}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md25}{}\doxysubsection{\texorpdfstring{Sistema de Monitoreo de 9 Variables en Pantalla TFT ILI9341 con RP2040}{Sistema de Monitoreo de 9 Variables en Pantalla TFT ILI9341 con RP2040}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md25}
+Este proyecto implementa un tablero gráfico en tiempo real para una pantalla TFT ILI9341 (320x240) controlada por un microcontrolador {\bfseries{RP2040}} (Raspberry Pi Pico) programado en {\bfseries{Micro\+Python}}.
+
+El sistema recibe lecturas y estados a través de su receptor {\bfseries{UART (Pin Físico 2)}} en formato clave-\/valor y actualiza las 9 variables con texto descriptivo, valores en tiempo real e {\bfseries{iconos dinámicos animados}} que cambian según el estado o magnitud de cada variable.
+
+\DoxyHorRuler{0}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md27}{}\doxysubsection{\texorpdfstring{1. Tabla de Conexiones (Pines Físicos vs GPIO)}{1. Tabla de Conexiones (Pines Físicos vs GPIO)}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md27}
+\begin{quote}
+{\bfseries{Nota:}} Todos los pines enumerados corresponden a los {\bfseries{pines físicos del módulo RP2040 / Raspberry Pi Pico}} (formato de 40 pines), tal como fue solicitado. \end{quote}
+
+
+
+\begin{DoxyTable}{5}{}{}{1}
+\SetCell{bg=\tableheadbgcolor,font=\bfseries}Función / Señal  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Pin Físico RP2040  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}GPIO Micro\+Python  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Conexión en Pantalla ILI9341 / Emisor  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Notas  \\
+{\bfseries{UART0 RX}}  &\SetCell{c}{\bfseries{Pin 2}}  &\SetCell{c}{\ttfamily GPIO 1}  &{\bfseries{TX}} del microcontrolador emisor / sensor  &Recepción de tramas UART  \\
+{\bfseries{UART0 TX}}  &\SetCell{c}Pin 1  &\SetCell{c}{\ttfamily GPIO 0}  &(Opcional) RX del emisor  &Salida UART / debug  \\
+{\bfseries{GND UART}}  &\SetCell{c}Pin 3, 23 o 28  &\SetCell{c}{\ttfamily GND}  &{\bfseries{GND}} del emisor  &Masa común obligatoria  \\
+{\bfseries{SPI0 CS}}  &\SetCell{c}{\bfseries{Pin 22}}  &\SetCell{c}{\ttfamily GPIO 17}  &{\bfseries{CS}} (Chip Select)  &Selección de pantalla SPI  \\
+{\bfseries{SPI0 SCK}}  &\SetCell{c}{\bfseries{Pin 24}}  &\SetCell{c}{\ttfamily GPIO 18}  &{\bfseries{SCK / CLK}}  &Reloj SPI (31.\+25 MHz)  \\
+{\bfseries{SPI0 MOSI}}  &\SetCell{c}{\bfseries{Pin 25}}  &\SetCell{c}{\ttfamily GPIO 19}  &{\bfseries{MOSI / SDI}}  &Entrada de datos pantalla  \\
+{\bfseries{TFT DC}}  &\SetCell{c}{\bfseries{Pin 26}}  &\SetCell{c}{\ttfamily GPIO 20}  &{\bfseries{DC / RS}} (Data/\+\+Command)  &Control Comando / Datos  \\
+{\bfseries{TFT RESET}}  &\SetCell{c}{\bfseries{Pin 27}}  &\SetCell{c}{\ttfamily GPIO 21}  &{\bfseries{RESET / RST}}  &Reset de pantalla  \\
+{\bfseries{TFT LED}}  &\SetCell{c}{\bfseries{Pin 29}}  &\SetCell{c}{\ttfamily GPIO 22}  &{\bfseries{LED / BL}} (Backlight)  &Encendido de luz de fondo  \\
+{\bfseries{GND Pantalla}}  &\SetCell{c}Pin 23 o 28  &\SetCell{c}{\ttfamily GND}  &{\bfseries{GND}}  &Tierra de alimentación  \\
+{\bfseries{VCC Pantalla}}  &\SetCell{c}Pin 36 o 40  &\SetCell{c}{\ttfamily 3V3} o {\ttfamily VBUS}  &{\bfseries{VCC}}  &3.\+3V (Pin 36) o 5V (Pin 40 con regulador)  \\
+\end{DoxyTable}
+
+
+\DoxyHorRuler{0}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md29}{}\doxysubsection{\texorpdfstring{2. Las 9 Variables y su Comportamiento Visual}{2. Las 9 Variables y su Comportamiento Visual}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md29}
+La pantalla organiza las 9 variables en una cuadrícula de 3x3 tarjetas de alto contraste con refresco diferencial (cero parpadeo):
+
+
+\begin{DoxyTable}{6}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\#  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Variable  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Clave UART  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Tipo  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Texto en Pantalla  &\SetCell{bg=\tableheadbgcolor,font=\bfseries}Icono Dinámico / Ilustración que cambia  \\
+\SetCell{c}{\bfseries{1}}  &{\bfseries{Temperatura Ambiental}} (DHT11)  &{\ttfamily T\+\_\+\+AMB}  &\SetCell{c}Numérica (°C)  &{\ttfamily T. AMBIENTE}  &{\bfseries{Termómetro:}} Nivel de mercurio cambia: Azul (\texorpdfstring{$<$}{<}20°C), Verde (20-\/30°C), Rojo (\texorpdfstring{$>$}{>}30°C).  \\
+\SetCell{c}{\bfseries{2}}  &{\bfseries{Humedad Ambiental}} (DHT11)  &{\ttfamily H\+\_\+\+AMB}  &\SetCell{c}Numérica (\%)  &{\ttfamily HUM. AMB.}  &{\bfseries{Gota de agua:}} Ámbar seco (\texorpdfstring{$<$}{<}40\%), Cian ideal (40-\/70\%), Azul saturado (\texorpdfstring{$>$}{>}70\%).  \\
+\SetCell{c}{\bfseries{3}}  &{\bfseries{Temperatura de Producto}} (LM35)  &{\ttfamily T\+\_\+\+PROD}  &\SetCell{c}Numérica (°C)  &{\ttfamily T. PRODUCTO}  &{\bfseries{Caja con sonda:}} Sonda térmica cambia a Cian (frío \texorpdfstring{$<$}{<}8°C), Verde (óptimo 8-\/18°C), Ámbar (\texorpdfstring{$>$}{>}18°C).  \\
+\SetCell{c}{\bfseries{4}}  &{\bfseries{Temperatura del Disipador}}  &{\ttfamily T\+\_\+\+DIS}  &\SetCell{c}Numérica (°C)  &{\ttfamily T. DISIPADOR}  &{\bfseries{Disipador:}} Aletas Verdes (\texorpdfstring{$<$}{<}40°C), Ámbar (40-\/60°C), Rojo con ondas de calor activas (\texorpdfstring{$>$}{>}60°C).  \\
+\SetCell{c}{\bfseries{5}}  &{\bfseries{Encendido del Disipador}}  &{\ttfamily DIS}  &\SetCell{c}ON / OFF  &{\ttfamily DISIPADOR}  &{\bfseries{Ventilador:}} Gris apagado cuando OFF. Aspas en verde brillante rotando/\+girando cuando ON.  \\
+\SetCell{c}{\bfseries{6}}  &{\bfseries{Encendido de la Peltier}}  &{\ttfamily PEL}  &\SetCell{c}ON / OFF  &{\ttfamily PELTIER}  &{\bfseries{Célula Peltier:}} Gris apagado cuando OFF. Copo de cristal cian resplandeciente con destellos cuando ON.  \\
+\SetCell{c}{\bfseries{7}}  &{\bfseries{Encendido del Radiador}}  &{\ttfamily RAD}  &\SetCell{c}ON / OFF  &{\ttfamily RADIADOR}  &{\bfseries{Radiador:}} Serpentín gris apagado cuando OFF. Serpentín incandescente naranja/\+rojo radiando calor cuando ON.  \\
+\SetCell{c}{\bfseries{8}}  &{\bfseries{Ventilador Deshumidificador}}  &{\ttfamily V\+\_\+\+DES}  &\SetCell{c}ON / OFF  &{\ttfamily V. DESHUM.}  &{\bfseries{Turbina extractora:}} Gris apagado cuando OFF. Turbina activa magenta girando cuando ON.  \\
+\SetCell{c}{\bfseries{9}}  &{\bfseries{Humidificadores}}  &{\ttfamily HUM}  &\SetCell{c}ON / OFF  &{\ttfamily HUMIDIFIC.}  &{\bfseries{Boquilla vapor:}} Gris sin vapor cuando OFF. Boquilla con nubes de niebla/\+vapor azul celeste ascendiendo cuando ON.  \\
+\end{DoxyTable}
+
+
+\DoxyHorRuler{0}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md31}{}\doxysubsection{\texorpdfstring{3. Protocolo de Comandos UART (Pin Físico 2)}{3. Protocolo de Comandos UART (Pin Físico 2)}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md31}
+El sistema procesa texto en formato clave-\/valor sin importar mayúsculas o minúsculas.\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md32}{}\doxysubsubsection{\texorpdfstring{Valores admitidos:}{Valores admitidos:}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md32}
+
+\begin{DoxyItemize}
+\item {\bfseries{Variables analógicas:}} Números enteros o decimales (ej: {\ttfamily 24.\+5}, {\ttfamily 60}, {\ttfamily 14.\+2}).
+\item {\bfseries{Actuadores ON/\+\+OFF:}} {\ttfamily ON}, {\ttfamily OFF}, {\ttfamily 1}, {\ttfamily 0}, {\ttfamily TRUE}, {\ttfamily FALSE}, {\ttfamily SI}, {\ttfamily NO}, {\ttfamily HIGH}, {\ttfamily LOW}.
+\end{DoxyItemize}\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md33}{}\doxysubsubsection{\texorpdfstring{Ejemplos de tramas:}{Ejemplos de tramas:}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md33}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md34}{}\doxysubsubsubsection{\texorpdfstring{A. Comandos individuales (uno por línea):}{A. Comandos individuales (uno por línea):}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md34}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{T\_AMB=24.5}
+\DoxyCodeLine{H\_AMB=62.0}
+\DoxyCodeLine{T\_PROD=15.3}
+\DoxyCodeLine{T\_DIS=38.4}
+\DoxyCodeLine{DIS=ON}
+\DoxyCodeLine{PEL=ON}
+\DoxyCodeLine{RAD=OFF}
+\DoxyCodeLine{V\_DES=OFF}
+\DoxyCodeLine{HUM=ON}
+
+\end{DoxyCode}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md35}{}\doxysubsubsubsection{\texorpdfstring{B. Múltiples comandos en una sola línea (separados por coma o punto y coma):}{B. Múltiples comandos en una sola línea (separados por coma o punto y coma):}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md35}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{T\_AMB=25.2,\ H\_AMB=55.0,\ PEL=1,\ DIS=1,\ RAD=0}
+
+\end{DoxyCode}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{T\_PROD=12.5;\ T\_DIS=41.2;\ V\_DES=ON;\ HUM=OFF}
+
+\end{DoxyCode}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md36}{}\doxysubsubsubsection{\texorpdfstring{C. Alias reconocidos automáticamente:}{C. Alias reconocidos automáticamente:}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md36}
+
+\begin{DoxyItemize}
+\item {\ttfamily T\+\_\+\+AMB}, {\ttfamily TAMB}, {\ttfamily TEMP\+\_\+\+AMB}, {\ttfamily DHT\+\_\+T}
+\item {\ttfamily H\+\_\+\+AMB}, {\ttfamily HAMB}, {\ttfamily HUM\+\_\+\+AMB}, {\ttfamily DHT\+\_\+H}
+\item {\ttfamily T\+\_\+\+PROD}, {\ttfamily TPROD}, {\ttfamily TEMP\+\_\+\+PROD}, {\ttfamily LM35}
+\item {\ttfamily T\+\_\+\+DIS}, {\ttfamily TDIS}, {\ttfamily TEMP\+\_\+\+DIS}
+\item {\ttfamily DIS}, {\ttfamily DISIPADOR}, {\ttfamily FAN\+\_\+\+DIS}
+\item {\ttfamily PEL}, {\ttfamily PELTIER}, {\ttfamily CELDA}
+\item {\ttfamily RAD}, {\ttfamily RADIADOR}, {\ttfamily HEATER}
+\item {\ttfamily V\+\_\+\+DES}, {\ttfamily VDES}, {\ttfamily VENT\+\_\+\+DES}, {\ttfamily DESHUM}
+\item {\ttfamily HUM}, {\ttfamily HUMIDIFICADOR}, {\ttfamily HUMIDIFICADORES}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md38}{}\doxysubsection{\texorpdfstring{4. Estructura de Archivos}{4. Estructura de Archivos}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md38}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{c:\(\backslash\)Users\(\backslash\)migue\(\backslash\)Display\(\backslash\)}
+\DoxyCodeLine{│}
+\DoxyCodeLine{├──\ ili9341.py\ \ \ \ \ \ \ \ \ \ \ \#\ Controlador\ de\ pantalla\ SPI\ de\ alta\ velocidad\ para\ RP2040}
+\DoxyCodeLine{├──\ icons.py\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Mapas\ de\ bits\ 16x16\ de\ iconos\ dinámicos\ y\ cuadros\ de\ animación}
+\DoxyCodeLine{├──\ main.py\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Programa\ principal\ (UART,\ lógica,\ refresco\ gráfico)}
+\DoxyCodeLine{├──\ test\_uart\_sender.py\ \ \#\ Script\ para\ enviar\ datos\ de\ prueba\ desde\ PC\ vía\ USB-\/Serial}
+\DoxyCodeLine{└──\ README.md\ \ \ \ \ \ \ \ \ \ \ \ \#\ Este\ manual\ de\ referencia}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md40}{}\doxysubsection{\texorpdfstring{5. Puesta en Marcha Rápida con Thonny}{5. Puesta en Marcha Rápida con Thonny}}\label{dir_8b29354ea792f14f229ba6ab36888b3c_autotoc_md40}
+
+\begin{DoxyEnumerate}
+\item Conecta tu {\bfseries{Raspberry Pi Pico (RP2040)}} a la computadora con el botón {\bfseries{BOOTSEL}} presionado y carga el firmware oficial de {\bfseries{Micro\+Python}}.
+\item Abre el IDE \href{https://thonny.org/}{\texttt{Thonny}}.
+\item Selecciona en la esquina inferior derecha el intérprete {\bfseries{Micro\+Python (Raspberry Pi Pico)}}.
+\item Copia los archivos {\ttfamily ili9341.\+py}, {\ttfamily icons.\+py} y {\ttfamily main.\+py} a la memoria interna de la Raspberry Pi Pico.
+\item Ejecuta {\ttfamily main.\+py}.
+\begin{DoxyItemize}
+\item {\bfseries{Modo Demostración Automático:}} Si no hay ningún emisor UART conectado en los primeros 5 segundos, la pantalla comenzará una animación de demostración variando las temperaturas y encendiendo/\+apagando los actuadores para que verifiques de inmediato el cableado.
+\item En cuanto envíes el primer comando por el {\bfseries{Pin Físico 2}}, el modo demo se desactiva y pasa al control en vivo. 
+\end{DoxyItemize}
+\end{DoxyEnumerate}

@@ -1,3 +1,11 @@
+/**
+ * @file ssd1306.c
+ * @brief Implementacion del controlador grafico SSD1306 sobre el bus I2C.
+ *
+ * Mantiene una imagen monocroma de 128x64 en RAM y ofrece primitivas de dibujo
+ * que actualizan ese buffer antes de su envio al display.
+ */
+
 #include "ssd1306.h"
 #include "ssd1306_font.h"
 #include <string.h>
@@ -6,17 +14,20 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+/** Etiqueta usada en los mensajes de registro del modulo. */
 #define TAG "SSD1306"
 
 static i2c_port_t s_i2c_port = I2C_NUM_0;
 static uint8_t s_i2c_addr = SSD1306_DEFAULT_ADDR;
 static uint8_t s_buffer[SSD1306_BUFFER_SIZE];
 
+/** @brief Envia un comando individual al display usando el control byte de comandos. */
 static esp_err_t ssd1306_write_cmd(uint8_t cmd) {
     uint8_t buf[2] = {0x00, cmd};
     return i2c_master_write_to_device(s_i2c_port, s_i2c_addr, buf, sizeof(buf), pdMS_TO_TICKS(100));
 }
 
+/** @brief Envia una secuencia de comandos al display mediante I2C. */
 static esp_err_t ssd1306_write_cmds(const uint8_t *cmds, size_t len) {
     i2c_cmd_handle_t handle = i2c_cmd_link_create();
     i2c_master_start(handle);

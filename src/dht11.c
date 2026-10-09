@@ -1,3 +1,11 @@
+/**
+ * @file dht11.c
+ * @brief Implementacion de la comunicacion temporizada con el sensor DHT11.
+ *
+ * El protocolo se muestrea mediante espera activa y una seccion critica para
+ * reducir variaciones de temporizacion durante la recepcion de los 40 bits.
+ */
+
 #include "dht11.h"
 #include "driver/gpio.h"
 #include "esp_timer.h"
@@ -6,9 +14,16 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+/** Etiqueta usada en los mensajes de registro del modulo. */
 #define TAG "DHT11"
 
-// Esperar un nivel en el pin con timeout en µs
+/**
+ * @brief Espera hasta que un GPIO alcance el nivel solicitado.
+ * @param pin GPIO que se consultara.
+ * @param level Nivel logico esperado, 0 o 1.
+ * @param timeout_us Tiempo maximo de espera en microsegundos.
+ * @return ESP_OK si se detecta el nivel o ESP_ERR_TIMEOUT si vence el plazo.
+ */
 static esp_err_t wait_level(int pin, int level, int timeout_us)
 {
     int64_t start = esp_timer_get_time();

@@ -1,0 +1,19 @@
+\doxysection{dht11.\+h}
+\hypertarget{dht11_8h_source}{}\label{dht11_8h_source}\index{src/dht11.h@{src/dht11.h}}
+\doxymbox{\hyperlink{dht11_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}esp\_err.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structdht11__data__t_a4b5200bafa5615b99d8c3849e9960270}{temperature}};\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{structdht11__data__t_ae258d3ed86af3a4931014104e1dac8e6}{humidity}};\ \ \ \ }
+\DoxyCodeLine{00013\ \}\ \doxymbox{\hyperlink{structdht11__data__t}{dht11\_data\_t}};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00024\ esp\_err\_t\ \doxymbox{\hyperlink{dht11_8c_a79f439fe988171d2b9c7314a161bc156}{dht11\_init}}(\textcolor{keywordtype}{int}\ gpio\_pin);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00037\ esp\_err\_t\ \doxymbox{\hyperlink{dht11_8c_a742737f0af5644f3f31925930b09eee4}{dht11\_read}}(\textcolor{keywordtype}{int}\ gpio\_pin,\ \doxymbox{\hyperlink{structdht11__data__t}{dht11\_data\_t}}\ *out);}
+
+\end{DoxyCode}
